@@ -411,6 +411,10 @@
 
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        
+        // Display dimensions (actual screen size in CSS pixels)
+        let displayWidth = window.innerWidth;
+        let displayHeight = window.innerHeight;
 
         // Perfect screen-filling canvas with aspect ratio handling
         function resizeCanvas() {
@@ -419,17 +423,17 @@
             document.documentElement.style.setProperty('--vh', `${vh}px`);
             
             // Get actual viewport dimensions
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
+            displayWidth = window.innerWidth;
+            displayHeight = window.innerHeight;
             const dpr = window.devicePixelRatio || 1;
             
             // Set display size (CSS pixels)
-            canvas.style.width = viewportWidth + 'px';
-            canvas.style.height = viewportHeight + 'px';
+            canvas.style.width = displayWidth + 'px';
+            canvas.style.height = displayHeight + 'px';
             
             // Set actual canvas size (accounting for DPI)
-            canvas.width = viewportWidth * dpr;
-            canvas.height = viewportHeight * dpr;
+            canvas.width = displayWidth * dpr;
+            canvas.height = displayHeight * dpr;
             
             // Scale context to match DPI
             ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
@@ -437,10 +441,10 @@
             
             // Update game ground level if it exists
             if (game && game.groundLevel !== undefined) {
-                game.groundLevel = viewportHeight - 100;
+                game.groundLevel = displayHeight - 100;
             }
             
-            console.log(`Canvas resized: ${viewportWidth}x${viewportHeight} @ ${dpr}x DPI`);
+            console.log(`Canvas resized: ${displayWidth}x${displayHeight} @ ${dpr}x DPI`);
         }
         
         // Initial resize
@@ -474,7 +478,7 @@
             state: 'start', // start, playing, gameOver, victory
             mode: 'solo', // solo or multiplayer
             npcs: [], // NPC climbers in multiplayer
-            timer: 60, // 60 seconds starting time for solo mode
+            timer: 30, // 30 seconds starting time for solo mode
             timerActive: false,
             player: {
                 x: 0,
@@ -568,8 +572,8 @@
 
         // Helper function to get cliff bounds at any Y position
         function getCliffBounds(y) {
-            const baseCliffWidth = canvas.width * 0.6;
-            const cliffCenterX = canvas.width / 2;
+            const baseCliffWidth = displayWidth * 0.6;
+            const cliffCenterX = displayWidth / 2;
             
             // Smaller, more realistic variations for actual cliff face
             const leftVariation = Math.sin(y * 0.002) * 40 + 
@@ -591,13 +595,13 @@
             game.holds = [];
             game.decorations = [];
             game.milestoneFlags = [];
-            game.groundLevel = canvas.height - 100;
+            game.groundLevel = displayHeight - 100;
             game.lastHoldY = game.groundLevel;
             game.lastMilestone = 0;
             
             // Starting hold at ground level
             game.holds.push({
-                x: canvas.width / 2,
+                x: displayWidth / 2,
                 y: game.groundLevel,
                 width: 35,
                 height: 20,
@@ -618,11 +622,15 @@
             }
 
             // Set player above first hold
-            game.player.x = canvas.width / 2;
+            game.player.x = displayWidth / 2;
             game.player.y = game.groundLevel - 60;
             game.player.currentHold = game.holds[0];
             game.player.grounded = true;
             game.player.snapping = false;
+            
+            // Initialize camera to show player
+            game.camera.y = game.player.y - displayHeight * 0.6;
+            game.camera.targetY = game.camera.y;
         }
 
         function addDecoration() {
@@ -634,7 +642,7 @@
                 // Shrub
                 decoration = {
                     type: 'shrub',
-                    x: Math.random() * canvas.width,
+                    x: Math.random() * displayWidth,
                     y: y,
                     size: 20 + Math.random() * 30
                 };
@@ -642,7 +650,7 @@
                 // Small tree
                 decoration = {
                     type: 'tree',
-                    x: Math.random() * canvas.width,
+                    x: Math.random() * displayWidth,
                     y: y,
                     size: 40 + Math.random() * 40
                 };
@@ -650,7 +658,7 @@
                 // Goat
                 decoration = {
                     type: 'goat',
-                    x: Math.random() * canvas.width,
+                    x: Math.random() * displayWidth,
                     y: y,
                     size: 25 + Math.random() * 15,
                     facingRight: Math.random() > 0.5
@@ -902,11 +910,11 @@
             game.maxHeight = Math.max(game.maxHeight, game.height);
             
             // Update camera
-            game.camera.targetY = game.player.y - canvas.height * 0.6;
+            game.camera.targetY = game.player.y - displayHeight * 0.6;
             game.camera.y += (game.camera.targetY - game.camera.y) * 0.1;
             
             // Generate more holds
-            if (-game.lastHoldY < -game.camera.y + canvas.height * 2) {
+            if (-game.lastHoldY < -game.camera.y + displayHeight * 2) {
                 addHold();
             }
             
@@ -1040,7 +1048,7 @@
             // Move player to summit position
             const summitY = game.groundLevel - (game.winThreshold * 10) - 100;
             game.player.y = summitY;
-            game.player.x = canvas.width / 2;
+            game.player.x = displayWidth / 2;
             game.player.vx = 0;
             game.player.vy = 0;
             game.player.grounded = true;
@@ -1091,7 +1099,7 @@
 
         function resetGameForNextChallenge() {
             // Reset player position
-            game.player.x = canvas.width / 2;
+            game.player.x = displayWidth / 2;
             game.player.y = game.groundLevel - 60;
             game.player.vx = 0;
             game.player.vy = 0;
@@ -1114,7 +1122,7 @@
             
             // Reset timer for solo mode
             if (game.mode === 'solo') {
-                game.timer = 60;
+                game.timer = 30;
                 game.timerActive = true;
             }
             
@@ -1228,31 +1236,31 @@
 
         // Render
         function render() {
-            // Sky background
-            const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            // Clear and draw sky background
+            const skyGradient = ctx.createLinearGradient(0, 0, 0, displayHeight);
             skyGradient.addColorStop(0, '#87ceeb');
             skyGradient.addColorStop(0.6, '#b8d4ea');
             skyGradient.addColorStop(1, '#e8d5c4');
             ctx.fillStyle = skyGradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, displayWidth, displayHeight);
             
             // Draw distant mountains in background
             ctx.fillStyle = 'rgba(120, 100, 80, 0.2)';
             ctx.beginPath();
-            ctx.moveTo(0, canvas.height * 0.7);
-            for (let i = 0; i <= canvas.width; i += 50) {
-                ctx.lineTo(i, canvas.height * 0.7 + Math.sin(i * 0.01) * 30);
+            ctx.moveTo(0, displayHeight * 0.7);
+            for (let i = 0; i <= displayWidth; i += 50) {
+                ctx.lineTo(i, displayHeight * 0.7 + Math.sin(i * 0.01) * 30);
             }
-            ctx.lineTo(canvas.width, canvas.height);
-            ctx.lineTo(0, canvas.height);
+            ctx.lineTo(displayWidth, displayHeight);
+            ctx.lineTo(0, displayHeight);
             ctx.closePath();
             ctx.fill();
             
             // Draw animated clouds
             ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
             for (let i = 0; i < 8; i++) {
-                const x = (i * 283.7 + game.time * 10) % (canvas.width + 100) - 50;
-                const y = ((i * 157.3) % (canvas.height * 0.4));
+                const x = (i * 283.7 + game.time * 10) % (displayWidth + 100) - 50;
+                const y = ((i * 157.3) % (displayHeight * 0.4));
                 ctx.beginPath();
                 ctx.ellipse(x, y, 50 + i * 4, 25 + i * 2, 0, 0, Math.PI * 2);
                 ctx.fill();
@@ -1262,10 +1270,10 @@
             ctx.translate(0, -game.camera.y);
             
             // Draw cliff face with realistic vertical columns
-            const baseCliffWidth = canvas.width * 0.6;
-            const cliffCenterX = canvas.width / 2;
-            const cliffStartY = Math.floor((game.camera.y - canvas.height) / 100) * 100;
-            const cliffEndY = game.camera.y + canvas.height * 3;
+            const baseCliffWidth = displayWidth * 0.6;
+            const cliffCenterX = displayWidth / 2;
+            const cliffStartY = Math.floor((game.camera.y - displayHeight) / 100) * 100;
+            const cliffEndY = game.camera.y + displayHeight * 3;
             
             // Build cliff outline
             ctx.beginPath();
@@ -1353,7 +1361,7 @@
             }
             
             // Draw ground at bottom - extends in all directions
-            if (game.groundLevel - game.camera.y < canvas.height + 100) {
+            if (game.groundLevel - game.camera.y < displayHeight + 100) {
                 const groundBounds = getCliffBounds(game.groundLevel);
                 
                 // Draw main ground platform extending outward
@@ -1364,7 +1372,7 @@
                 ctx.fillStyle = groundGradient;
                 
                 // Ground extends from cliff edges outward and downward
-                ctx.fillRect(0, game.groundLevel, canvas.width, 500);
+                ctx.fillRect(0, game.groundLevel, displayWidth, 500);
                 
                 // Draw cliff base where it meets ground
                 ctx.fillStyle = '#7a6954';
@@ -1388,7 +1396,7 @@
             for (let milestone of game.milestones) {
                 const milestoneY = game.groundLevel - (milestone * 10);
                 
-                if (milestoneY > game.camera.y - 50 && milestoneY < game.camera.y + canvas.height + 50) {
+                if (milestoneY > game.camera.y - 50 && milestoneY < game.camera.y + displayHeight + 50) {
                     const bounds = getCliffBounds(milestoneY);
                     
                     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
@@ -1404,7 +1412,7 @@
             
             // Draw milestone flags with animation
             for (let flag of game.milestoneFlags) {
-                if (flag.y > game.camera.y - 50 && flag.y < game.camera.y + canvas.height + 50) {
+                if (flag.y > game.camera.y - 50 && flag.y < game.camera.y + displayHeight + 50) {
                     const bounds = getCliffBounds(flag.y);
                     const edgeX = flag.leftSide ? bounds.left + 20 : bounds.right - 20;
                     
@@ -1435,7 +1443,7 @@
             
             // Draw decorations with animations
             for (let dec of game.decorations) {
-                if (dec.y < game.camera.y - 50 || dec.y > game.camera.y + canvas.height + 50) continue;
+                if (dec.y < game.camera.y - 50 || dec.y > game.camera.y + displayHeight + 50) continue;
                 
                 const bounds = getCliffBounds(dec.y);
                 
@@ -2193,7 +2201,7 @@
                 game.npcs.push({
                     name: npcNames[i],
                     color: npcColors[i],
-                    x: canvas.width / 2 + (Math.random() - 0.5) * 100,
+                    x: displayWidth / 2 + (Math.random() - 0.5) * 100,
                     y: game.groundLevel - 60,
                     vx: 0,
                     vy: 0,
@@ -2292,7 +2300,7 @@
                 // Fall detection - respawn at ground
                 if (npc.y > game.groundLevel + 50) {
                     npc.y = game.groundLevel - 60;
-                    npc.x = canvas.width / 2 + (Math.random() - 0.5) * 100;
+                    npc.x = displayWidth / 2 + (Math.random() - 0.5) * 100;
                     npc.vx = 0;
                     npc.vy = 0;
                     npc.grounded = true;
@@ -2438,7 +2446,7 @@
             
             // Initialize timer for solo mode
             if (mode === 'solo') {
-                game.timer = 60;
+                game.timer = 30;
                 game.timerActive = true;
             } else {
                 game.timerActive = false;
