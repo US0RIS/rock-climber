@@ -472,9 +472,9 @@
             ctx.fillStyle = skyGradient;
             ctx.fillRect(0, 0, displayWidth, displayHeight);
             
-            // Draw a simple cliff preview
+            // Draw a simple cliff preview (wider for mobile)
             const cliffCenterX = displayWidth / 2;
-            const cliffWidth = displayWidth * 0.6;
+            const cliffWidth = displayWidth * 0.85; // Increased from 0.6 to 0.85
             
             ctx.fillStyle = '#8b7355';
             ctx.strokeStyle = '#6b5335';
@@ -1047,16 +1047,16 @@
 
         // Helper function to get cliff bounds at any Y position
         function getCliffBounds(y) {
-            const baseCliffWidth = displayWidth * 0.6;
+            const baseCliffWidth = displayWidth * 0.85; // Increased from 0.6 to 0.85 for mobile
             const cliffCenterX = displayWidth / 2;
             
-            // Smaller, more realistic variations for actual cliff face
-            const leftVariation = Math.sin(y * 0.002) * 40 + 
-                                 Math.sin(y * 0.008) * 20 + 
-                                 Math.cos(y * 0.015) * 10;
-            const rightVariation = Math.sin(y * 0.002 + Math.PI) * 40 + 
-                                  Math.cos(y * 0.008 + 1) * 20 + 
-                                  Math.sin(y * 0.015 + 2) * 10;
+            // Larger variations so cliff edges reach closer to screen edges
+            const leftVariation = Math.sin(y * 0.002) * 60 + 
+                                 Math.sin(y * 0.008) * 30 + 
+                                 Math.cos(y * 0.015) * 15;
+            const rightVariation = Math.sin(y * 0.002 + Math.PI) * 60 + 
+                                  Math.cos(y * 0.008 + 1) * 30 + 
+                                  Math.sin(y * 0.015 + 2) * 15;
             
             return {
                 left: cliffCenterX - baseCliffWidth / 2 + leftVariation,
@@ -2766,7 +2766,7 @@
             drawLandmarks(ctx, game.maxHeight);
             
             // Draw cliff face with realistic vertical columns
-            const baseCliffWidth = displayWidth * 0.6;
+            const baseCliffWidth = displayWidth * 0.85; // Increased from 0.6 to 0.85 for mobile
             const cliffCenterX = displayWidth / 2;
             const cliffStartY = Math.floor((game.camera.y - displayHeight) / 100) * 100;
             const cliffEndY = game.camera.y + displayHeight * 3;
