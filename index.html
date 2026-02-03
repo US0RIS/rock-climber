@@ -65,15 +65,15 @@
         }
 
         .hud-left, .hud-right {
-            background: rgba(40, 30, 20, 0.9);
-            padding: 12px 16px;
-            border-radius: 12px;
+            background: rgba(30, 25, 20, 0.92);
+            padding: 14px 20px;
+            border: 1px solid rgba(200, 170, 130, 0.3);
+            border-bottom: 2px solid rgba(200, 170, 130, 0.4);
+            border-radius: 6px;
             color: #fff;
-            font-weight: bold;
-            font-size: clamp(14px, 4vw, 18px);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(139, 115, 85, 0.6);
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.3px;
         }
 
         .power-bar {
@@ -89,33 +89,32 @@
 
         .power-bar-label {
             text-align: center;
-            color: #fff;
-            font-weight: bold;
-            font-size: clamp(12px, 3.5vw, 16px);
-            margin-bottom: 8px;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .power-bar-container {
             width: 100%;
             height: 50px;
-            background: linear-gradient(135deg, rgba(40, 30, 20, 0.95) 0%, rgba(60, 45, 30, 0.95) 100%);
-            border-radius: 25px;
+            background: rgba(25, 20, 15, 0.93);
+            border: 1px solid rgba(139, 90, 60, 0.4);
+            border-top: 1px solid rgba(139, 90, 60, 0.2);
+            border-radius: 8px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 3px solid rgba(139, 90, 43, 0.7);
             position: relative;
             cursor: pointer;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
         }
 
         .power-fill {
             height: 100%;
-            background: linear-gradient(90deg, #6b8e23 0%, #8b7355 50%, #d4a574 100%);
-            transition: width 0.1s;
+            background: linear-gradient(to bottom, #8a9560 0%, #7a8450 50%, #6a7440 100%);
+            transition: width 0.1s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .power-percentage {
@@ -124,9 +123,8 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
-            font-weight: bold;
-            font-size: clamp(18px, 5vw, 24px);
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+            font-weight: 700;
+            font-size: 19px;
             pointer-events: none;
             z-index: 2;
         }
@@ -137,15 +135,12 @@
             left: 50%;
             transform: translateX(-50%);
             color: #fff;
-            font-size: clamp(12px, 3.5vw, 16px);
+            font-size: 14px;
             text-align: center;
             z-index: 5;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
             max-width: 90%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
             display: none;
         }
 
@@ -184,7 +179,7 @@
             font-size: 11px;
             color: #d4a78a;
             font-weight: bold;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+            
             white-space: nowrap;
         }
 
@@ -199,10 +194,10 @@
             border: 2px solid rgba(139, 115, 85, 0.8);
             min-width: 160px;
             max-width: 200px;
-            backdrop-filter: blur(10px);
+            
             z-index: 10;
             display: none;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+            
         }
 
         /* Screens - Mobile Optimized */
@@ -216,7 +211,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(139, 115, 85, 0.98) 0%, rgba(101, 67, 33, 0.98) 100%);
+            background: rgba(101, 67, 33, 0.95);
             z-index: 100;
             opacity: 0;
             pointer-events: none;
@@ -230,62 +225,76 @@
         }
 
         .title {
-            font-size: clamp(32px, 10vw, 56px);
-            font-weight: bold;
+            font-size: 52px;
+            font-weight: 800;
             color: #fff;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            font-size: clamp(14px, 4vw, 20px);
-            color: #d4a78a;
-            margin-bottom: 30px;
+            font-size: 17px;
+            color: rgba(212, 167, 138, 0.9);
+            margin-bottom: 35px;
             text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
         .btn {
-            padding: clamp(12px, 3vw, 18px) clamp(24px, 6vw, 40px);
-            margin: 8px;
-            font-size: clamp(16px, 4.5vw, 22px);
-            font-weight: bold;
+            padding: 16px 32px;
+            margin: 10px;
+            font-size: 17px;
+            font-weight: 600;
             color: #fff;
-            background: linear-gradient(135deg, #8b7355, #d4a78a);
-            border: 3px solid #654321;
-            border-radius: 15px;
+            background: #8b7355;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-            min-width: 200px;
+            transition: all 0.15s ease;
+            min-width: 220px;
             max-width: 90%;
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            background: #9a8365;
+            border-bottom-width: 1px;
+            transform: translateY(1px);
         }
 
         .btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+            background: #6b5335;
+            border-bottom-width: 1px;
+            transform: translateY(1px);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #a78bfa, #ff9a56);
-            border-color: #7c3aed;
+            background: #9b6baa;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: #ab7bba;
         }
 
         .coins-display {
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: 20px;
             color: #ffd700;
-            font-weight: bold;
-            margin-top: 20px;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+            font-weight: 700;
+            margin-top: 25px;
+            letter-spacing: 0.5px;
         }
 
         .score-display {
-            font-size: clamp(24px, 6vw, 36px);
+            font-size: 36px;
             color: #fff;
-            font-weight: bold;
-            margin: 20px 0;
-            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.9);
+            font-weight: 700;
+            margin: 25px 0;
+            letter-spacing: -0.5px;
         }
 
         /* Loading Screen */
@@ -295,7 +304,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #8b7355, #654321);
+            background: #7a6550;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -311,10 +320,10 @@
 
         .loading-text {
             color: #fff;
-            font-size: clamp(20px, 5vw, 28px);
+            font-size: 24px;
             font-weight: bold;
             margin-top: 20px;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+            
         }
 
         @keyframes spin {
@@ -358,7 +367,7 @@
 
     <!-- Multiplayer Leaderboard -->
     <div id="leaderboard">
-        <div style="color: #ffd700; font-weight: bold; font-size: clamp(14px, 4vw, 16px); margin-bottom: 10px; text-align: center; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);">🏆 RACE</div>
+        <div style="color: #ffd700; font-weight: bold; font-size: 24px; margin-bottom: 10px; text-align: center; ">🏆 RACE</div>
         <div id="leaderboardList"></div>
     </div>
 
@@ -375,9 +384,30 @@
     <div class="screen active" id="startScreen">
         <div class="title">⛰️ MOUNTAIN<br>CLIMBER</div>
         <div class="subtitle">Race to the Summit!</div>
-        <button class="btn" onclick="startGame('solo')">🧗 SOLO CLIMB</button>
-        <button class="btn" onclick="startGame('multiplayer')" style="background: linear-gradient(135deg, #6b8e23, #95e1d3); border-color: #4a5f1e;">👥 MULTIPLAYER</button>
+        <button class="btn" onclick="game.startGame('solo')">🧗 SOLO CLIMB</button>
+        <button class="btn" onclick="game.startGame('multiplayer')" style="background: #6b8e23; border-color: rgba(0,0,0,0.2);">👥 MULTIPLAYER</button>
+        <button class="btn" onclick="game.showStore()" style="background: #d4a03c; border-color: rgba(0,0,0,0.2);">🏪 STORE</button>
         <div class="coins-display">🪙 <span id="totalCoins">0</span></div>
+    </div>
+
+    <!-- Store Screen -->
+    <div class="screen" id="storeScreen">
+        <div class="title">🏪 STORE</div>
+        <div class="coins-display" style="margin-bottom: 20px;">🪙 <span id="storeCoins">0</span></div>
+        
+        <div style="max-width: 90%; width: 600px; max-height: 60vh; overflow-y: auto; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(101, 67, 33, 0.5); border-radius: 10px; padding: 20px;">
+            <!-- Tabs -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
+                <button class="btn" onclick="game.showStoreTab('skins')" id="skinsTab" style="padding: 10px 15px; font-size: 14px; min-width: 100px; border-radius: 6px;">👕 SKINS</button>
+                <button class="btn" onclick="game.showStoreTab('powerups')" id="powerupsTab" style="padding: 10px 15px; font-size: 14px; min-width: 100px; border-radius: 6px;">⚡ POWER-UPS</button>
+                <button class="btn" onclick="game.showStoreTab('upgrades')" id="upgradesTab" style="padding: 10px 15px; font-size: 14px; min-width: 100px; border-radius: 6px;">⬆️ UPGRADES</button>
+            </div>
+            
+            <!-- Store Content -->
+            <div id="storeContent"></div>
+        </div>
+        
+        <button class="btn" onclick="game.showStart()" style="margin-top: 20px;">← BACK</button>
     </div>
 
     <!-- Game Over Screen -->
@@ -480,6 +510,10 @@
             npcs: [], // NPC climbers in multiplayer
             timer: 30, // 30 seconds starting time for solo mode
             timerActive: false,
+            countdown: 3, // Countdown for multiplayer start
+            raceStarted: false, // Track if race has started
+            raceFinished: false, // Track if race is over
+            finishOrder: [], // Track order of finishers
             player: {
                 x: 0,
                 y: 0,
@@ -523,8 +557,8 @@
             holdSpacing: 150,
             lastHoldY: 0,
             continued: false,
-            unlockedSkins: JSON.parse(localStorage.getItem('climberSkins') || '["default"]'),
-            selectedSkin: localStorage.getItem('climberSelectedSkin') || 'default',
+            ownedSkins: JSON.parse(localStorage.getItem('ownedSkins') || '["default"]'),
+            selectedSkin: localStorage.getItem('selectedSkin') || 'default',
             groundLevel: 0,
             lastMilestone: 0,
             milestones: [], // Will be calculated dynamically
@@ -532,26 +566,28 @@
             winThreshold: 500,
             completedRuns: 0,
             milestoneFlags: [],
-            time: 0
+            time: 0,
+            activePowerUps: {
+                coinMultiplier: 1,
+                bonusTime: 0,
+                revive: false,
+                magnet: false,
+                luckBoost: false,
+                speedBoost: false
+            },
+            ownedUpgrades: JSON.parse(localStorage.getItem('ownedUpgrades') || '[]')
         };
 
         // Generate progressive milestones: 250m intervals (x3), 300m (x3), 350m (x3), 400m (x3), etc.
         function generateMilestones() {
             const milestones = [];
             let currentHeight = 0;
-            let interval = 250;
-            let intervalCount = 0;
-            const intervalsPerStep = 3;
+            let interval = 250; // Start at 250m
             
             for (let i = 0; i < 30; i++) { // Generate 30 milestones
                 currentHeight += interval;
                 milestones.push(currentHeight);
-                
-                intervalCount++;
-                if (intervalCount >= intervalsPerStep) {
-                    interval += 50; // Increase interval by 50m every 3 milestones
-                    intervalCount = 0;
-                }
+                interval += 100; // Increase by 100m each checkpoint
             }
             
             return milestones;
@@ -562,12 +598,429 @@
 
         // Skin definitions
         const skins = {
-            default: { name: 'Classic', color: '#ff6b6b', cost: 0 },
-            blue: { name: 'Arctic', color: '#4ecdc4', cost: 100 },
-            yellow: { name: 'Sunshine', color: '#ffe66d', cost: 250 },
-            green: { name: 'Forest', color: '#95e1d3', cost: 500 },
-            purple: { name: 'Summit', color: '#a78bfa', cost: 750 },
-            orange: { name: 'Volcano', color: '#ff9a56', cost: 1000 }
+            // Starter Skins (Free-2500)
+            default: { 
+                name: 'Classic Climber', 
+                cost: 0, 
+                category: 'Starter',
+                type: 'human',
+                colors: { primary: '#ff6b6b', secondary: '#c23616', accent: '#2c3e50' },
+                description: 'Your trusty climbing companion'
+            },
+            ninja: { 
+                name: 'Shadow Ninja', 
+                cost: 1000, 
+                category: 'Starter',
+                type: 'human',
+                colors: { primary: '#2c3e50', secondary: '#000000', accent: '#e74c3c' },
+                description: 'Silent and deadly'
+            },
+            astronaut: { 
+                name: 'Space Explorer', 
+                cost: 2500, 
+                category: 'Starter',
+                type: 'human',
+                colors: { primary: '#ecf0f1', secondary: '#3498db', accent: '#e67e22' },
+                description: 'One small step for climber...'
+            },
+            
+            // Animal Collection (3000-6000)
+            goat: { 
+                name: 'Mountain Goat', 
+                cost: 3000, 
+                category: 'Animals',
+                type: 'goat',
+                colors: { primary: '#ecf0f1', secondary: '#95a5a6', accent: '#34495e' },
+                description: 'Natural born climber'
+            },
+            cow: { 
+                name: 'Holy Cow', 
+                cost: 3500, 
+                category: 'Animals',
+                type: 'cow',
+                colors: { primary: '#ffffff', secondary: '#000000', accent: '#e74c3c' },
+                description: 'Udderly amazing'
+            },
+            monkey: { 
+                name: 'Jungle Monkey', 
+                cost: 4000, 
+                category: 'Animals',
+                type: 'monkey',
+                colors: { primary: '#8b6914', secondary: '#d4a574', accent: '#ff69b4' },
+                description: 'Swings into action'
+            },
+            panda: { 
+                name: 'Kung Fu Panda', 
+                cost: 4500, 
+                category: 'Animals',
+                type: 'panda',
+                colors: { primary: '#ffffff', secondary: '#000000', accent: '#2ecc71' },
+                description: 'The Dragon Warrior'
+            },
+            bear: { 
+                name: 'Grizzly Bear', 
+                cost: 5000, 
+                category: 'Animals',
+                type: 'bear',
+                colors: { primary: '#8b6914', secondary: '#654321', accent: '#e74c3c' },
+                description: 'Beary strong climber'
+            },
+            penguin: { 
+                name: 'Arctic Penguin', 
+                cost: 5500, 
+                category: 'Animals',
+                type: 'penguin',
+                colors: { primary: '#000000', secondary: '#ffffff', accent: '#f39c12' },
+                description: 'Waddles up mountains'
+            },
+            
+            // Heroes Collection (6500-10000)
+            spiderman: { 
+                name: 'Web Slinger', 
+                cost: 6500, 
+                category: 'Heroes',
+                type: 'hero',
+                colors: { primary: '#e74c3c', secondary: '#3498db', accent: '#000000' },
+                description: 'Friendly neighborhood climber'
+            },
+            batman: { 
+                name: 'Dark Knight', 
+                cost: 7500, 
+                category: 'Heroes',
+                type: 'hero',
+                colors: { primary: '#2c3e50', secondary: '#34495e', accent: '#f39c12' },
+                description: 'I am the night'
+            },
+            ironman: { 
+                name: 'Iron Climber', 
+                cost: 8500, 
+                category: 'Heroes',
+                type: 'hero',
+                colors: { primary: '#e74c3c', secondary: '#f39c12', accent: '#ecf0f1' },
+                description: 'Genius billionaire climber'
+            },
+            deadpool: { 
+                name: 'Merc with Mouth', 
+                cost: 10000, 
+                category: 'Heroes',
+                type: 'deadpool',
+                colors: { primary: '#e74c3c', secondary: '#2c3e50', accent: '#ecf0f1' },
+                description: 'Maximum effort climbing!'
+            },
+            
+            // Villains Collection (11000-15000)
+            darthvader: { 
+                name: 'Dark Lord', 
+                cost: 11000, 
+                category: 'Villains',
+                type: 'vader',
+                colors: { primary: '#000000', secondary: '#2c3e50', accent: '#e74c3c' },
+                description: 'I find your lack of climbing disturbing'
+            },
+            joker: { 
+                name: 'Clown Prince', 
+                cost: 12000, 
+                category: 'Villains',
+                type: 'villain',
+                colors: { primary: '#9b59b6', secondary: '#2ecc71', accent: '#ecf0f1' },
+                description: 'Why so serious about climbing?'
+            },
+            thanos: { 
+                name: 'Mad Titan', 
+                cost: 13000, 
+                category: 'Villains',
+                type: 'villain',
+                colors: { primary: '#9b59b6', secondary: '#f39c12', accent: '#34495e' },
+                description: 'Perfectly balanced climbing'
+            },
+            venom: { 
+                name: 'Symbiote', 
+                cost: 15000, 
+                category: 'Villains',
+                type: 'villain',
+                colors: { primary: '#000000', secondary: '#ecf0f1', accent: '#e74c3c' },
+                description: 'We are climber'
+            },
+            
+            // Fantasy Collection (16000-20000)
+            dragon: { 
+                name: 'Fire Dragon', 
+                cost: 16000, 
+                category: 'Fantasy',
+                type: 'dragon',
+                colors: { primary: '#e74c3c', secondary: '#f39c12', accent: '#000000' },
+                description: 'Breathes fire while climbing'
+            },
+            unicorn: { 
+                name: 'Magical Unicorn', 
+                cost: 17000, 
+                category: 'Fantasy',
+                type: 'unicorn',
+                colors: { primary: '#ffffff', secondary: '#ff69b4', accent: '#9b59b6' },
+                description: 'Believe in magic'
+            },
+            wizard: { 
+                name: 'Grand Wizard', 
+                cost: 18000, 
+                category: 'Fantasy',
+                type: 'wizard',
+                colors: { primary: '#9b59b6', secondary: '#3498db', accent: '#f39c12' },
+                description: 'You shall not fall!'
+            },
+            mermaid: { 
+                name: 'Sea Climber', 
+                cost: 20000, 
+                category: 'Fantasy',
+                type: 'mermaid',
+                colors: { primary: '#3498db', secondary: '#1abc9c', accent: '#ff69b4' },
+                description: 'Part of your world'
+            },
+            
+            // Robot Collection (22000-28000)
+            robot: { 
+                name: 'Mega Bot', 
+                cost: 22000, 
+                category: 'Robots',
+                type: 'robot',
+                colors: { primary: '#95a5a6', secondary: '#34495e', accent: '#3498db' },
+                description: 'Does not compute falling'
+            },
+            transformer: { 
+                name: 'Auto-Climber', 
+                cost: 24000, 
+                category: 'Robots',
+                type: 'robot',
+                colors: { primary: '#e74c3c', secondary: '#3498db', accent: '#f39c12' },
+                description: 'Climbers, roll out!'
+            },
+            terminator: { 
+                name: 'Climber-800', 
+                cost: 26000, 
+                category: 'Robots',
+                type: 'robot',
+                colors: { primary: '#7f8c8d', secondary: '#e74c3c', accent: '#000000' },
+                description: "I'll be back (at the top)"
+            },
+            walle: { 
+                name: 'Waste Bot', 
+                cost: 28000, 
+                category: 'Robots',
+                type: 'robot',
+                colors: { primary: '#f39c12', secondary: '#95a5a6', accent: '#000000' },
+                description: 'WALL-E climb!'
+            },
+            
+            // Legendary Collection (30000-50000)
+            goku: { 
+                name: 'Super Saiyan', 
+                cost: 30000, 
+                category: 'Legendary',
+                type: 'hero',
+                colors: { primary: '#f39c12', secondary: '#3498db', accent: '#ecf0f1' },
+                special: 'aura',
+                description: 'OVER 9000 meters!'
+            },
+            sonic: { 
+                name: 'Blue Blur', 
+                cost: 35000, 
+                category: 'Legendary',
+                type: 'sonic',
+                colors: { primary: '#3498db', secondary: '#e74c3c', accent: '#ecf0f1' },
+                special: 'speed',
+                description: 'Gotta climb fast!'
+            },
+            pikachu: { 
+                name: 'Thunder Mouse', 
+                cost: 40000, 
+                category: 'Legendary',
+                type: 'pokemon',
+                colors: { primary: '#f1c40f', secondary: '#e74c3c', accent: '#000000' },
+                special: 'electric',
+                description: 'Pika-CLIMB!'
+            },
+            mario: { 
+                name: 'Plumber Hero', 
+                cost: 45000, 
+                category: 'Legendary',
+                type: 'mario',
+                colors: { primary: '#e74c3c', secondary: '#3498db', accent: '#f39c12' },
+                special: 'powerup',
+                description: 'Wahoo! Let\'s-a-climb!'
+            },
+            rainbow: { 
+                name: 'Rainbow Warrior', 
+                cost: 50000, 
+                category: 'Legendary',
+                type: 'special',
+                colors: { primary: '#ff0000', secondary: '#00ff00', accent: '#0000ff' },
+                special: 'rainbow',
+                description: 'Taste the rainbow'
+            }
+        };
+        
+        // Power-ups store (consumables)
+        const powerUps = {
+            doubleCoins: {
+                name: '2x Coins Boost',
+                description: '🔄 Single use: Next game earns double coins',
+                icon: '💰',
+                cost: 500,
+                type: 'consumable',
+                effect: 'coinMultiplier',
+                stackable: false
+            },
+            timeBoost: {
+                name: 'Time Boost',
+                description: '🔄 Single use: Next game starts with +30s bonus',
+                icon: '⏰',
+                cost: 300,
+                type: 'consumable',
+                effect: 'bonusTime',
+                stackable: false
+            },
+            safetyNet: {
+                name: 'Safety Net',
+                description: '🔄 Single use: One free revival after falling',
+                icon: '🛡️',
+                cost: 800,
+                type: 'consumable',
+                effect: 'revive',
+                stackable: false
+            },
+            magnetCoins: {
+                name: 'Coin Magnet',
+                description: '🔄 Single use: Auto-collect all nearby coins',
+                icon: '🧲',
+                cost: 600,
+                type: 'consumable',
+                effect: 'magnet',
+                stackable: false
+            },
+            luckyCharm: {
+                name: 'Lucky Charm',
+                description: '🔄 Single use: 35% → 80% coin drop rate',
+                icon: '🍀',
+                cost: 700,
+                type: 'consumable',
+                effect: 'luckBoost',
+                stackable: false
+            },
+            speedBoost: {
+                name: 'Quick Hands',
+                description: '🔄 Single use: -50% jump cooldown',
+                icon: '⚡',
+                cost: 400,
+                type: 'consumable',
+                effect: 'speedBoost',
+                stackable: false
+            }
+        };
+        
+        // Permanent upgrades store
+        const upgrades = {
+            jumpPower1: {
+                name: 'Jump Power I',
+                description: '♾️ Permanent: +5% jump power',
+                icon: '💪',
+                cost: 2000,
+                type: 'permanent',
+                effect: 'jumpPower',
+                value: 0.05,
+                stackable: true,
+                stackInfo: 'Stacks with II & III'
+            },
+            jumpPower2: {
+                name: 'Jump Power II',
+                description: '♾️ Permanent: +10% jump power (total +15%)',
+                icon: '💪💪',
+                cost: 5000,
+                type: 'permanent',
+                effect: 'jumpPower',
+                value: 0.10,
+                requires: 'jumpPower1',
+                stackable: true,
+                stackInfo: 'Requires I first'
+            },
+            jumpPower3: {
+                name: 'Jump Power III',
+                description: '♾️ Permanent: +15% jump power (total +30%)',
+                icon: '💪💪💪',
+                cost: 10000,
+                type: 'permanent',
+                effect: 'jumpPower',
+                value: 0.15,
+                requires: 'jumpPower2',
+                stackable: true,
+                stackInfo: 'Requires II first'
+            },
+            timerBoost1: {
+                name: 'Timer Extension I',
+                description: '♾️ Permanent: +5s starting time',
+                icon: '⏱️',
+                cost: 2000,
+                type: 'permanent',
+                effect: 'startTime',
+                value: 5,
+                stackable: true,
+                stackInfo: 'Stacks with II & III'
+            },
+            timerBoost2: {
+                name: 'Timer Extension II',
+                description: '♾️ Permanent: +10s starting time (total +15s)',
+                icon: '⏱️⏱️',
+                cost: 5000,
+                type: 'permanent',
+                effect: 'startTime',
+                value: 10,
+                requires: 'timerBoost1',
+                stackable: true,
+                stackInfo: 'Requires I first'
+            },
+            timerBoost3: {
+                name: 'Timer Extension III',
+                description: '♾️ Permanent: +15s starting time (total +30s)',
+                icon: '⏱️⏱️⏱️',
+                cost: 10000,
+                type: 'permanent',
+                effect: 'startTime',
+                value: 15,
+                requires: 'timerBoost2',
+                stackable: true,
+                stackInfo: 'Requires II first'
+            },
+            coinBoost1: {
+                name: 'Coin Luck I',
+                description: '♾️ Permanent: +10% coin drop rate',
+                icon: '🪙',
+                cost: 3000,
+                type: 'permanent',
+                effect: 'coinRate',
+                value: 0.10,
+                stackable: true,
+                stackInfo: 'Stacks with II'
+            },
+            coinBoost2: {
+                name: 'Coin Luck II',
+                description: '♾️ Permanent: +20% coin drop rate (total +30%)',
+                icon: '🪙🪙',
+                cost: 7000,
+                type: 'permanent',
+                effect: 'coinRate',
+                value: 0.20,
+                requires: 'coinBoost1',
+                stackable: true,
+                stackInfo: 'Requires I first'
+            },
+            holdCooldown: {
+                name: 'Grip Master',
+                description: '♾️ Permanent: -200ms hold cooldown',
+                icon: '👐',
+                cost: 8000,
+                type: 'permanent',
+                effect: 'cooldown',
+                value: -200,
+                stackable: false
+            }
         };
 
         // Helper function to get cliff bounds at any Y position
@@ -731,6 +1184,11 @@
 
         // Physics
         function updatePlayer(dt) {
+            // Don't update player during multiplayer countdown
+            if (game.mode === 'multiplayer' && !game.raceStarted) {
+                return;
+            }
+            
             // Update animations
             game.player.armAnimation += dt * 3;
             game.player.legAnimation += dt * 4;
@@ -765,12 +1223,15 @@
                     game.player.y = game.player.currentHold.y - game.player.currentHold.height / 2 - game.player.radius;
                     game.player.targetRotation = 0;
                     
-                    // Award coin only once per hold
+                    // Award coin with only 20% chance (F2P monetization)
                     if (!game.player.currentHold.visited) {
                         game.player.currentHold.visited = true;
-                        game.coins++;
-                        createCoinParticles(game.player.currentHold.x, game.player.currentHold.y);
-                        vibrate(10);
+                        const dropChance = game.activePowerUps.luckBoost ? 0.8 : 0.35; // 35% base rate (was 20%), luck charm boosts to 80%
+                        if (Math.random() < dropChance) {
+                            game.coins += (game.activePowerUps.coinMultiplier * 2); // 2 coins per drop (was 1)
+                            createCoinParticles(game.player.currentHold.x, game.player.currentHold.y);
+                            vibrate(10);
+                        }
                     }
                 } else {
                     // Lerp to hold position
@@ -893,7 +1354,7 @@
                     game.checkpointsCollected.push(milestone);
                     game.lastMilestone = milestone;
                     addMilestoneFlag(milestone);
-                    game.coins += Math.floor(milestone / 10); // Bonus coins
+                    game.coins += Math.floor(milestone / 50); // milestone/50 for better progression
                     
                     // Add 20 seconds to timer in solo mode
                     if (game.mode === 'solo' && game.timerActive) {
@@ -908,6 +1369,12 @@
             
             game.height = newHeight;
             game.maxHeight = Math.max(game.maxHeight, game.height);
+            
+            // Check if player reached 1000m in multiplayer
+            if (game.mode === 'multiplayer' && game.height >= 1000 && !game.raceFinished) {
+                game.finishOrder.push('YOU');
+                checkRaceFinish();
+            }
             
             // Update camera
             game.camera.targetY = game.player.y - displayHeight * 0.6;
@@ -1040,42 +1507,32 @@
             });
         }
 
-        function winGame() {
+        function winGame(position = 1) {
             game.state = 'victory';
             game.player.celebrating = true;
             game.player.celebrationTime = 0;
             
-            // Move player to summit position
-            const summitY = game.groundLevel - (game.winThreshold * 10) - 100;
-            game.player.y = summitY;
-            game.player.x = displayWidth / 2;
-            game.player.vx = 0;
-            game.player.vy = 0;
-            game.player.grounded = true;
-            game.player.rotation = 0;
-            
             vibrate(100);
             
-            // Check multiplayer result
-            let resultMessage = '🏆 SUMMIT REACHED!';
+            // Determine result message based on position
+            let resultMessage = '🏆 VICTORY!';
+            const medals = ['🥇', '🥈', '🥉', '4️⃣'];
+            const placeNames = ['FIRST PLACE!', 'SECOND PLACE!', 'THIRD PLACE!', '4TH PLACE'];
+            const messages = ['YOU WIN!', 'Nice climb!', 'Good effort!', 'Keep climbing!'];
+            
             if (game.mode === 'multiplayer') {
-                // Check if player finished first
-                const allFinished = game.npcs.filter(npc => npc.height >= game.winThreshold);
-                if (allFinished.length === 0) {
-                    resultMessage = '🥇 FIRST PLACE!\nYOU WIN!';
-                } else if (allFinished.length === 1) {
-                    resultMessage = '🥈 SECOND PLACE!\nNice climb!';
-                } else if (allFinished.length === 2) {
-                    resultMessage = '🥉 THIRD PLACE!\nGood effort!';
-                } else {
-                    resultMessage = `${allFinished.length + 1}th PLACE\nKeep climbing!`;
-                }
+                const medal = medals[position - 1] || '🏁';
+                const place = placeNames[position - 1] || `${position}TH PLACE`;
+                const msg = messages[position - 1] || 'Nice try!';
+                resultMessage = `${medal} ${place}\n${msg}`;
             }
             
             // Show victory after animation
             setTimeout(() => {
                 game.totalCoins += game.coins;
-                game.totalCoins += game.winThreshold; // Bonus for winning
+                if (position === 1) {
+                    game.totalCoins += 100; // Victory bonus
+                }
                 localStorage.setItem('climberCoins', game.totalCoins);
                 game.completedRuns++;
                 
@@ -1165,10 +1622,10 @@
                 
                 html += `
                     <div style="padding: 6px 8px; margin: 4px 0; border-radius: 8px; ${highlight} display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); font-weight: ${fontWeight};">
+                        <span style="color: #fff;  font-weight: ${fontWeight};">
                             ${medal} <span style="color: ${p.color};">${p.name}</span>
                         </span>
-                        <span style="color: #d4a78a; font-weight: bold; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);">${p.height}m</span>
+                        <span style="color: #d4a78a; font-weight: bold; ">${p.height}m</span>
                     </div>
                 `;
             }
@@ -1233,41 +1690,1048 @@
             currentIndicator.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.8)';
             rulerBg.appendChild(currentIndicator);
         }
+        
+        // Character drawing function
+        function drawCharacter(ctx, skin, player) {
+            const r = player.radius;
+            const colors = skin.colors;
+            
+            // Draw based on character type
+            switch(skin.type) {
+                case 'deadpool':
+                    // Red suit
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Black accents
+                    ctx.fillStyle = colors.secondary;
+                    ctx.fillRect(-r*0.3, -r*0.2, r*0.6, r*0.1);
+                    // Eye patches (white)
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.ellipse(-r*0.3, -r*0.2, r*0.25, r*0.3, -0.2, 0, Math.PI * 2);
+                    ctx.ellipse(r*0.3, -r*0.2, r*0.25, r*0.3, 0.2, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Black eyes
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.3, -r*0.15, r*0.15, 0, Math.PI * 2);
+                    ctx.arc(r*0.3, -r*0.15, r*0.15, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Pouches
+                    ctx.fillStyle = colors.secondary;
+                    ctx.fillRect(-r*0.6, r*0.3, r*0.4, r*0.3);
+                    ctx.fillRect(r*0.2, r*0.3, r*0.4, r*0.3);
+                    break;
+                    
+                case 'vader':
+                    // Black helmet
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Helmet dome
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.arc(0, -r*0.3, r*0.9, 0, Math.PI, true);
+                    ctx.fill();
+                    // Face mask
+                    ctx.fillStyle = '#222';
+                    ctx.fillRect(-r*0.6, -r*0.1, r*1.2, r*0.8);
+                    // Eyes
+                    ctx.fillStyle = colors.accent;
+                    ctx.fillRect(-r*0.4, -r*0.05, r*0.3, r*0.15);
+                    ctx.fillRect(r*0.1, -r*0.05, r*0.3, r*0.15);
+                    // Respirator
+                    ctx.fillStyle = '#333';
+                    ctx.fillRect(-r*0.3, r*0.3, r*0.6, r*0.4);
+                    ctx.strokeStyle = '#555';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.2, r*0.4);
+                    ctx.lineTo(-r*0.2, r*0.6);
+                    ctx.moveTo(0, r*0.4);
+                    ctx.lineTo(0, r*0.6);
+                    ctx.moveTo(r*0.2, r*0.4);
+                    ctx.lineTo(r*0.2, r*0.6);
+                    ctx.stroke();
+                    break;
+                    
+                case 'goat':
+                    // White/gray fur body
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Horns
+                    ctx.fillStyle = colors.accent;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.6, -r*0.5);
+                    ctx.quadraticCurveTo(-r*0.8, -r*0.9, -r*0.5, -r*1.1);
+                    ctx.quadraticCurveTo(-r*0.5, -r*0.7, -r*0.6, -r*0.5);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(r*0.6, -r*0.5);
+                    ctx.quadraticCurveTo(r*0.8, -r*0.9, r*0.5, -r*1.1);
+                    ctx.quadraticCurveTo(r*0.5, -r*0.7, r*0.6, -r*0.5);
+                    ctx.fill();
+                    // Face details
+                    ctx.fillStyle = colors.secondary;
+                    ctx.fillRect(-r*0.5, -r*0.2, r, r*0.6);
+                    // Eyes
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(-r*0.3, -r*0.1, r*0.15, r*0.25);
+                    ctx.fillRect(r*0.15, -r*0.1, r*0.15, r*0.25);
+                    // Beard
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.4, r*0.4);
+                    ctx.lineTo(0, r*0.9);
+                    ctx.lineTo(r*0.4, r*0.4);
+                    ctx.fill();
+                    break;
+                    
+                case 'cow':
+                    // White body with black spots
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Black spots
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.arc(-r*0.4, -r*0.3, r*0.3, 0, Math.PI * 2);
+                    ctx.arc(r*0.3, r*0.2, r*0.4, 0, Math.PI * 2);
+                    ctx.arc(-r*0.2, r*0.5, r*0.25, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Snout
+                    ctx.fillStyle = '#ffcccc';
+                    ctx.fillRect(-r*0.4, r*0.3, r*0.8, r*0.4);
+                    // Nostrils
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.2, r*0.5, r*0.08, 0, Math.PI * 2);
+                    ctx.arc(r*0.2, r*0.5, r*0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Ears
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.ellipse(-r*0.8, -r*0.3, r*0.25, r*0.4, -0.4, 0, Math.PI * 2);
+                    ctx.ellipse(r*0.8, -r*0.3, r*0.25, r*0.4, 0.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.3, 0, r*0.12, 0, Math.PI * 2);
+                    ctx.arc(r*0.3, 0, r*0.12, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                    
+                case 'panda':
+                    // White face
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Black ears
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.arc(-r*0.7, -r*0.5, r*0.4, 0, Math.PI * 2);
+                    ctx.arc(r*0.7, -r*0.5, r*0.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Black eye patches
+                    ctx.beginPath();
+                    ctx.ellipse(-r*0.35, -r*0.1, r*0.3, r*0.35, -0.2, 0, Math.PI * 2);
+                    ctx.ellipse(r*0.35, -r*0.1, r*0.3, r*0.35, 0.2, 0, Math.PI * 2);
+                    ctx.fill();
+                    // White eyes
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.3, -r*0.1, r*0.15, 0, Math.PI * 2);
+                    ctx.arc(r*0.3, -r*0.1, r*0.15, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Black pupils
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.3, -r*0.1, r*0.08, 0, Math.PI * 2);
+                    ctx.arc(r*0.3, -r*0.1, r*0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Nose
+                    ctx.beginPath();
+                    ctx.arc(0, r*0.2, r*0.12, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Bamboo stick
+                    ctx.fillStyle = colors.accent;
+                    ctx.fillRect(r*0.5, -r*0.3, r*0.15, r*1.2);
+                    ctx.strokeStyle = '#2a5520';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(r*0.5, -r*0.1);
+                    ctx.lineTo(r*0.65, -r*0.1);
+                    ctx.moveTo(r*0.5, r*0.3);
+                    ctx.lineTo(r*0.65, r*0.3);
+                    ctx.stroke();
+                    break;
+                    
+                case 'penguin':
+                    // Black body
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // White belly
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.ellipse(0, r*0.2, r*0.6, r*0.7, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes (white circles)
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.25, -r*0.3, r*0.2, 0, Math.PI * 2);
+                    ctx.arc(r*0.25, -r*0.3, r*0.2, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Pupils
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.25, -r*0.25, r*0.1, 0, Math.PI * 2);
+                    ctx.arc(r*0.25, -r*0.25, r*0.1, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Orange beak
+                    ctx.fillStyle = colors.accent;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(-r*0.15, r*0.15);
+                    ctx.lineTo(r*0.15, r*0.15);
+                    ctx.closePath();
+                    ctx.fill();
+                    // Flippers
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.ellipse(-r*0.9, r*0.2, r*0.3, r*0.5, -0.5, 0, Math.PI * 2);
+                    ctx.ellipse(r*0.9, r*0.2, r*0.3, r*0.5, 0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                
+                case 'hero': // Spiderman, Batman, Ironman, Goku
+                    if (skin.name.includes('Web')) {
+                        // Spiderman - red with web pattern
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Web pattern
+                        ctx.strokeStyle = colors.secondary;
+                        ctx.lineWidth = 1.5;
+                        for(let i = 0; i < 8; i++) {
+                            ctx.beginPath();
+                            ctx.moveTo(0, 0);
+                            const angle = (Math.PI * 2 / 8) * i;
+                            ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+                            ctx.stroke();
+                        }
+                        for(let rad = r*0.3; rad < r; rad += r*0.2) {
+                            ctx.beginPath();
+                            ctx.arc(0, 0, rad, 0, Math.PI * 2);
+                            ctx.stroke();
+                        }
+                        // White eyes
+                        ctx.fillStyle = '#fff';
+                        ctx.beginPath();
+                        ctx.ellipse(-r*0.3, -r*0.2, r*0.2, r*0.35, -0.3, 0, Math.PI * 2);
+                        ctx.ellipse(r*0.3, -r*0.2, r*0.2, r*0.35, 0.3, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else if (skin.name.includes('Dark')) {
+                        // Batman - black with cowl
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Bat ears
+                        ctx.beginPath();
+                        ctx.moveTo(-r*0.5, -r*0.7);
+                        ctx.lineTo(-r*0.3, -r*1.2);
+                        ctx.lineTo(-r*0.2, -r*0.7);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.moveTo(r*0.5, -r*0.7);
+                        ctx.lineTo(r*0.3, -r*1.2);
+                        ctx.lineTo(r*0.2, -r*0.7);
+                        ctx.fill();
+                        // Cape
+                        ctx.fillStyle = colors.secondary;
+                        ctx.beginPath();
+                        ctx.moveTo(-r*0.8, 0);
+                        ctx.lineTo(-r*0.6, r*0.9);
+                        ctx.lineTo(r*0.6, r*0.9);
+                        ctx.lineTo(r*0.8, 0);
+                        ctx.fill();
+                        // Bat symbol
+                        ctx.fillStyle = colors.accent;
+                        ctx.beginPath();
+                        ctx.ellipse(0, r*0.3, r*0.4, r*0.2, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                        // White eyes
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(-r*0.35, -r*0.2, r*0.2, r*0.12);
+                        ctx.fillRect(r*0.15, -r*0.2, r*0.2, r*0.12);
+                    } else if (skin.name.includes('Iron')) {
+                        // Iron Man - red/gold armor
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Face plate
+                        ctx.fillStyle = colors.accent;
+                        ctx.fillRect(-r*0.6, -r*0.4, r*1.2, r*0.5);
+                        // Eyes
+                        ctx.fillStyle = colors.secondary;
+                        ctx.fillRect(-r*0.4, -r*0.25, r*0.25, r*0.15);
+                        ctx.fillRect(r*0.15, -r*0.25, r*0.25, r*0.15);
+                        // Arc reactor
+                        ctx.fillStyle = colors.secondary;
+                        ctx.beginPath();
+                        ctx.arc(0, r*0.4, r*0.25, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.strokeStyle = '#fff';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.arc(0, r*0.4, r*0.2, 0, Math.PI * 2);
+                        ctx.stroke();
+                        // Armor panels
+                        ctx.strokeStyle = colors.accent;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(-r*0.7, 0);
+                        ctx.lineTo(-r*0.3, 0);
+                        ctx.moveTo(r*0.3, 0);
+                        ctx.lineTo(r*0.7, 0);
+                        ctx.stroke();
+                    } else {
+                        // Goku - orange gi with blue details
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Gi details
+                        ctx.fillStyle = colors.secondary;
+                        ctx.fillRect(-r*0.7, -r*0.1, r*1.4, r*0.2);
+                        ctx.fillRect(-r*0.3, r*0.2, r*0.6, r*0.5);
+                        // Hair (spiky)
+                        ctx.fillStyle = '#000';
+                        for(let i = 0; i < 5; i++) {
+                            const x = -r*0.6 + (i * r*0.3);
+                            ctx.beginPath();
+                            ctx.moveTo(x, -r*0.5);
+                            ctx.lineTo(x, -r*1.1);
+                            ctx.lineTo(x + r*0.15, -r*0.5);
+                            ctx.fill();
+                        }
+                        // Eyes
+                        ctx.fillStyle = '#000';
+                        ctx.beginPath();
+                        ctx.arc(-r*0.2, -r*0.1, r*0.08, 0, Math.PI * 2);
+                        ctx.arc(r*0.2, -r*0.1, r*0.08, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    break;
+                
+                case 'villain': // Joker, Thanos, Venom
+                    if (skin.name.includes('Clown')) {
+                        // Joker - purple suit, green hair
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Green hair
+                        ctx.fillStyle = colors.secondary;
+                        ctx.beginPath();
+                        ctx.arc(0, -r*0.5, r*0.8, Math.PI, 0, true);
+                        ctx.fill();
+                        // White face
+                        ctx.fillStyle = colors.accent;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r*0.7, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Red smile
+                        ctx.strokeStyle = '#e74c3c';
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.arc(0, r*0.1, r*0.4, 0.2, Math.PI - 0.2);
+                        ctx.stroke();
+                        // Eyes
+                        ctx.fillStyle = '#000';
+                        ctx.beginPath();
+                        ctx.arc(-r*0.25, -r*0.15, r*0.08, 0, Math.PI * 2);
+                        ctx.arc(r*0.25, -r*0.15, r*0.08, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else if (skin.name.includes('Mad')) {
+                        // Thanos - purple with golden gauntlet
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Helmet ridges
+                        ctx.strokeStyle = colors.secondary;
+                        ctx.lineWidth = 3;
+                        for(let i = -1; i <= 1; i++) {
+                            ctx.beginPath();
+                            ctx.arc(i * r*0.3, -r*0.4, r*0.5, Math.PI * 1.2, Math.PI * 1.8);
+                            ctx.stroke();
+                        }
+                        // Eyes (small, intense)
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(-r*0.3, -r*0.1, r*0.15, r*0.08);
+                        ctx.fillRect(r*0.15, -r*0.1, r*0.15, r*0.08);
+                        // Gauntlet (gold with gems)
+                        ctx.fillStyle = colors.accent;
+                        ctx.fillRect(r*0.5, 0, r*0.4, r*0.6);
+                        const gemColors = ['#9b59b6', '#3498db', '#e74c3c', '#f39c12', '#2ecc71', '#e67e22'];
+                        for(let i = 0; i < 6; i++) {
+                            ctx.fillStyle = gemColors[i];
+                            const y = r*0.1 + (i * r*0.15);
+                            ctx.beginPath();
+                            ctx.arc(r*0.7, y, r*0.08, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    } else {
+                        // Venom - black with white spider and eyes
+                        ctx.fillStyle = colors.primary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r, 0, Math.PI * 2);
+                        ctx.fill();
+                        // White spider symbol
+                        ctx.fillStyle = colors.secondary;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, r*0.3, 0, Math.PI * 2);
+                        ctx.fill();
+                        for(let i = 0; i < 8; i++) {
+                            const angle = (Math.PI * 2 / 8) * i;
+                            ctx.fillRect(Math.cos(angle) * r*0.3 - 2, Math.sin(angle) * r*0.3 - 2, r*0.5, 4);
+                        }
+                        // Large white eyes
+                        ctx.fillStyle = '#fff';
+                        ctx.beginPath();
+                        ctx.ellipse(-r*0.3, -r*0.2, r*0.3, r*0.4, -0.3, 0, Math.PI * 2);
+                        ctx.ellipse(r*0.3, -r*0.2, r*0.3, r*0.4, 0.3, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Teeth
+                        ctx.fillStyle = '#fff';
+                        for(let i = -3; i <= 3; i++) {
+                            ctx.fillRect(i * r*0.15, r*0.3, r*0.1, r*0.2);
+                        }
+                    }
+                    break;
+                
+                case 'dragon':
+                    // Fire dragon - red/orange with wings and horns
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Wings
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.moveTo(-r, 0);
+                    ctx.lineTo(-r*1.5, -r*0.5);
+                    ctx.lineTo(-r*1.3, r*0.5);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(r, 0);
+                    ctx.lineTo(r*1.5, -r*0.5);
+                    ctx.lineTo(r*1.3, r*0.5);
+                    ctx.closePath();
+                    ctx.fill();
+                    // Horns
+                    ctx.fillStyle = colors.accent;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.5, -r*0.6);
+                    ctx.lineTo(-r*0.4, -r*1.2);
+                    ctx.lineTo(-r*0.3, -r*0.6);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(r*0.5, -r*0.6);
+                    ctx.lineTo(r*0.4, -r*1.2);
+                    ctx.lineTo(r*0.3, -r*0.6);
+                    ctx.fill();
+                    // Eyes (fierce)
+                    ctx.fillStyle = '#ff0';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.25, -r*0.2, r*0.15, 0, Math.PI * 2);
+                    ctx.arc(r*0.25, -r*0.2, r*0.15, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(-r*0.27, -r*0.2, r*0.04, r*0.15);
+                    ctx.fillRect(r*0.23, -r*0.2, r*0.04, r*0.15);
+                    // Snout with fire
+                    ctx.strokeStyle = colors.accent;
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, r*0.3, r*0.3, 0, Math.PI);
+                    ctx.stroke();
+                    break;
+                
+                case 'unicorn':
+                    // Magical unicorn - white with rainbow details
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Horn (rainbow)
+                    const rainbowGrad = ctx.createLinearGradient(0, -r*1.3, 0, -r*0.6);
+                    rainbowGrad.addColorStop(0, '#ff0000');
+                    rainbowGrad.addColorStop(0.5, '#ffff00');
+                    rainbowGrad.addColorStop(1, '#00ffff');
+                    ctx.fillStyle = rainbowGrad;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.1, -r*0.6);
+                    ctx.lineTo(0, -r*1.3);
+                    ctx.lineTo(r*0.1, -r*0.6);
+                    ctx.closePath();
+                    ctx.fill();
+                    // Mane (rainbow)
+                    for(let i = 0; i < 5; i++) {
+                        const colors = ['#ff0000', '#ff8800', '#ffff00', '#00ff00', '#0088ff'];
+                        ctx.fillStyle = colors[i];
+                        ctx.beginPath();
+                        ctx.arc(-r*0.7 + i*0.05*r, -r*0.3, r*0.15, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    // Eyes (sparkly)
+                    ctx.fillStyle = colors.accent;
+                    ctx.beginPath();
+                    ctx.arc(-r*0.25, -r*0.1, r*0.12, 0, Math.PI * 2);
+                    ctx.arc(r*0.25, -r*0.1, r*0.12, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.22, -r*0.12, r*0.05, 0, Math.PI * 2);
+                    ctx.arc(r*0.28, -r*0.12, r*0.05, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                
+                case 'robot':
+                    // Robot - metallic with antennas and panels
+                    ctx.fillStyle = colors.primary;
+                    ctx.fillRect(-r*0.8, -r*0.8, r*1.6, r*1.6);
+                    // Panel lines
+                    ctx.strokeStyle = colors.accent;
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(-r*0.8, -r*0.8, r*1.6, r*1.6);
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.8, 0);
+                    ctx.lineTo(r*0.8, 0);
+                    ctx.moveTo(0, -r*0.8);
+                    ctx.lineTo(0, r*0.8);
+                    ctx.stroke();
+                    // Antenna
+                    ctx.fillStyle = colors.secondary;
+                    ctx.fillRect(-r*0.1, -r*1.2, r*0.2, r*0.4);
+                    ctx.beginPath();
+                    ctx.arc(0, -r*1.2, r*0.15, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes (LED)
+                    ctx.fillStyle = colors.accent;
+                    ctx.fillRect(-r*0.5, -r*0.3, r*0.3, r*0.15);
+                    ctx.fillRect(r*0.2, -r*0.3, r*0.3, r*0.15);
+                    // Mouth (speaker grille)
+                    ctx.strokeStyle = colors.secondary;
+                    for(let i = 0; i < 5; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(-r*0.4, r*0.2 + i*0.08*r);
+                        ctx.lineTo(r*0.4, r*0.2 + i*0.08*r);
+                        ctx.stroke();
+                    }
+                    break;
+                
+                case 'sonic':
+                    // Sonic - blue with red shoes
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Spiky head
+                    for(let i = 0; i < 6; i++) {
+                        const angle = (Math.PI * 2 / 6) * i - Math.PI/2;
+                        ctx.beginPath();
+                        ctx.moveTo(Math.cos(angle) * r*0.7, Math.sin(angle) * r*0.7);
+                        ctx.lineTo(Math.cos(angle) * r*1.4, Math.sin(angle) * r*1.4);
+                        ctx.lineTo(Math.cos(angle + 0.5) * r*0.7, Math.sin(angle + 0.5) * r*0.7);
+                        ctx.fill();
+                    }
+                    // Peach muzzle
+                    ctx.fillStyle = '#ffd7a8';
+                    ctx.beginPath();
+                    ctx.arc(0, r*0.1, r*0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes (connected)
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.ellipse(-r*0.25, -r*0.2, r*0.25, r*0.3, 0, 0, Math.PI * 2);
+                    ctx.ellipse(r*0.25, -r*0.2, r*0.25, r*0.3, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Pupils
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.25, -r*0.15, r*0.12, 0, Math.PI * 2);
+                    ctx.arc(r*0.25, -r*0.15, r*0.12, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Nose
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(0, r*0.15, r*0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Red shoes indicator
+                    ctx.fillStyle = colors.secondary;
+                    ctx.fillRect(-r*0.4, r*0.7, r*0.35, r*0.25);
+                    ctx.fillRect(r*0.05, r*0.7, r*0.35, r*0.25);
+                    break;
+                
+                case 'pokemon':
+                    // Pikachu
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Ears (black tips)
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.5, -r*0.5);
+                    ctx.lineTo(-r*0.3, -r*1.2);
+                    ctx.lineTo(-r*0.2, -r*0.6);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(r*0.5, -r*0.5);
+                    ctx.lineTo(r*0.3, -r*1.2);
+                    ctx.lineTo(r*0.2, -r*0.6);
+                    ctx.fill();
+                    ctx.fillStyle = colors.accent;
+                    ctx.beginPath();
+                    ctx.moveTo(-r*0.35, -r*0.9);
+                    ctx.lineTo(-r*0.3, -r*1.2);
+                    ctx.lineTo(-r*0.25, -r*0.9);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(r*0.35, -r*0.9);
+                    ctx.lineTo(r*0.3, -r*1.2);
+                    ctx.lineTo(r*0.25, -r*0.9);
+                    ctx.fill();
+                    // Red cheeks
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.arc(-r*0.5, r*0.1, r*0.15, 0, Math.PI * 2);
+                    ctx.arc(r*0.5, r*0.1, r*0.15, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.25, -r*0.15, r*0.08, 0, Math.PI * 2);
+                    ctx.arc(r*0.25, -r*0.15, r*0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Lightning bolt tail
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.moveTo(r*0.6, r*0.3);
+                    ctx.lineTo(r*1.0, r*0.5);
+                    ctx.lineTo(r*0.8, r*0.7);
+                    ctx.lineTo(r*1.1, r*0.9);
+                    ctx.lineTo(r*0.7, r*0.75);
+                    ctx.lineTo(r*0.85, r*0.55);
+                    ctx.lineTo(r*0.6, r*0.6);
+                    ctx.fill();
+                    break;
+                
+                case 'mario':
+                    // Mario - red cap, mustache
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Red cap
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, -r*0.4, r*0.8, Math.PI, 0, true);
+                    ctx.fill();
+                    ctx.fillRect(-r*0.8, -r*0.4, r*1.6, r*0.2);
+                    // M logo
+                    ctx.fillStyle = '#fff';
+                    ctx.font = `bold ${r*0.6}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('M', 0, -r*0.5);
+                    // Face
+                    ctx.fillStyle = '#ffd7a8';
+                    ctx.beginPath();
+                    ctx.arc(0, r*0.1, r*0.6, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Eyes
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.2, -r*0.05, r*0.08, 0, Math.PI * 2);
+                    ctx.arc(r*0.2, -r*0.05, r*0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Mustache
+                    ctx.fillStyle = '#654321';
+                    ctx.beginPath();
+                    ctx.ellipse(-r*0.3, r*0.2, r*0.25, r*0.15, 0, 0, Math.PI, true);
+                    ctx.ellipse(r*0.3, r*0.2, r*0.25, r*0.15, 0, 0, Math.PI, true);
+                    ctx.fill();
+                    // Nose
+                    ctx.fillStyle = '#ffd7a8';
+                    ctx.beginPath();
+                    ctx.arc(0, r*0.15, r*0.12, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                    
+                default:
+                    // Default human climber
+                    // Body (circle)
+                    ctx.fillStyle = colors.primary;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Head details
+                    ctx.fillStyle = colors.secondary;
+                    ctx.beginPath();
+                    ctx.arc(0, -r*0.3, r*0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Backpack
+                    ctx.fillStyle = colors.accent;
+                    ctx.fillRect(-r*0.5, -r*0.1, r, r*0.7);
+                    // Helmet
+                    ctx.strokeStyle = colors.accent;
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(0, -r*0.3, r*0.6, Math.PI, Math.PI * 2);
+                    ctx.stroke();
+                    // Goggles
+                    ctx.fillStyle = colors.accent;
+                    ctx.fillRect(-r*0.5, -r*0.4, r*0.4, r*0.2);
+                    ctx.fillRect(r*0.1, -r*0.4, r*0.4, r*0.2);
+                    // Eyes through goggles
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.arc(-r*0.3, -r*0.3, r*0.08, 0, Math.PI * 2);
+                    ctx.arc(r*0.3, -r*0.3, r*0.08, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+            }
+            
+            // Animated arms/legs for all characters
+            ctx.strokeStyle = colors.primary;
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            const armSwing = Math.sin(player.armAnimation) * 0.3;
+            ctx.beginPath();
+            ctx.moveTo(-r*0.7, 0);
+            ctx.lineTo(-r*0.9, r*0.5 + armSwing * r);
+            ctx.moveTo(r*0.7, 0);
+            ctx.lineTo(r*0.9, r*0.5 - armSwing * r);
+            ctx.stroke();
+        }
+        
+        // Color interpolation helper
+        function interpolateColor(color1, color2, t) {
+            const c1 = parseInt(color1.slice(1), 16);
+            const c2 = parseInt(color2.slice(1), 16);
+            const r1 = (c1 >> 16) & 0xff, g1 = (c1 >> 8) & 0xff, b1 = c1 & 0xff;
+            const r2 = (c2 >> 16) & 0xff, g2 = (c2 >> 8) & 0xff, b2 = c2 & 0xff;
+            const r = Math.round(r1 + (r2 - r1) * t);
+            const g = Math.round(g1 + (g2 - g1) * t);
+            const b = Math.round(b1 + (b2 - b1) * t);
+            return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+        }
+        
+        // Draw landmarks based on altitude
+        function drawLandmarks(ctx, altitude) {
+            // Birds (0-500m)
+            if (altitude < 600) {
+                for (let i = 0; i < 5; i++) {
+                    const birdSeed = i * 567.89;
+                    const birdAltitude = (birdSeed % 500) + 50;
+                    const birdY = game.groundLevel - birdAltitude;
+                    
+                    // Only draw if on screen
+                    const screenY = birdY + game.camera.y;
+                    if (screenY > -50 && screenY < displayHeight + 50) {
+                        const birdX = ((birdSeed * 1.5) % 800) * (displayWidth / 800) + Math.sin(game.time * 2 + i) * 30;
+                        const flap = Math.sin(game.time * 8 + i * 1.5) * 0.3;
+                        
+                        ctx.save();
+                        ctx.translate(birdX, birdY);
+                        ctx.strokeStyle = 'rgba(60, 40, 20, 0.6)';
+                        ctx.lineWidth = 2;
+                        ctx.lineCap = 'round';
+                        
+                        // Bird V shape
+                        ctx.beginPath();
+                        ctx.moveTo(-8, 0);
+                        ctx.quadraticCurveTo(-4, -5 + flap * 5, 0, 0);
+                        ctx.quadraticCurveTo(4, -5 + flap * 5, 8, 0);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }
+            
+            // Planes (500-1000m)
+            if (altitude > 400 && altitude < 1200) {
+                for (let i = 0; i < 3; i++) {
+                    const planeSeed = i * 789.12;
+                    const planeAltitude = ((planeSeed % 500) + 500);
+                    const planeY = game.groundLevel - planeAltitude;
+                    
+                    const screenY = planeY + game.camera.y;
+                    if (screenY > -100 && screenY < displayHeight + 100) {
+                        const planeX = ((game.time * 50 + planeSeed * 100) % (displayWidth + 400)) - 200;
+                        
+                        ctx.save();
+                        ctx.translate(planeX, planeY);
+                        
+                        // Plane body
+                        ctx.fillStyle = 'rgba(200, 200, 220, 0.7)';
+                        ctx.fillRect(-30, -4, 60, 8);
+                        
+                        // Wings
+                        ctx.fillRect(-25, -2, 50, 2);
+                        ctx.fillRect(-15, -12, 8, 12);
+                        
+                        // Tail
+                        ctx.fillRect(20, -8, 10, 8);
+                        
+                        // Windows
+                        ctx.fillStyle = 'rgba(100, 150, 200, 0.5)';
+                        for (let w = -20; w < 20; w += 8) {
+                            ctx.fillRect(w, -2, 4, 4);
+                        }
+                        
+                        // Contrail
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.moveTo(-30, 0);
+                        ctx.lineTo(-80, 0);
+                        ctx.stroke();
+                        
+                        ctx.restore();
+                    }
+                }
+            }
+            
+            // Space objects (1000m+)
+            if (altitude > 900) {
+                // Rockets
+                for (let i = 0; i < 2; i++) {
+                    const rocketSeed = i * 456.78;
+                    const rocketAltitude = ((rocketSeed % 500) + 1000);
+                    const rocketY = game.groundLevel - rocketAltitude;
+                    
+                    const screenY = rocketY + game.camera.y;
+                    if (screenY > -150 && screenY < displayHeight + 150) {
+                        const rocketX = ((rocketSeed * 1.7) % 700) * (displayWidth / 700);
+                        const rocketFloat = Math.sin(game.time * 0.5 + i) * 20;
+                        
+                        ctx.save();
+                        ctx.translate(rocketX, rocketY + rocketFloat);
+                        
+                        // Rocket body
+                        ctx.fillStyle = 'rgba(220, 220, 230, 0.8)';
+                        ctx.fillRect(-8, -40, 16, 60);
+                        
+                        // Nose cone
+                        ctx.beginPath();
+                        ctx.moveTo(-8, -40);
+                        ctx.lineTo(0, -60);
+                        ctx.lineTo(8, -40);
+                        ctx.closePath();
+                        ctx.fill();
+                        
+                        // Fins
+                        ctx.fillStyle = 'rgba(200, 50, 50, 0.7)';
+                        ctx.beginPath();
+                        ctx.moveTo(-8, 10);
+                        ctx.lineTo(-20, 20);
+                        ctx.lineTo(-8, 20);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.moveTo(8, 10);
+                        ctx.lineTo(20, 20);
+                        ctx.lineTo(8, 20);
+                        ctx.fill();
+                        
+                        // Engine fire
+                        ctx.fillStyle = 'rgba(255, 150, 0, 0.6)';
+                        ctx.beginPath();
+                        ctx.moveTo(-6, 20);
+                        ctx.lineTo(0, 35 + Math.random() * 10);
+                        ctx.lineTo(6, 20);
+                        ctx.fill();
+                        
+                        // Window
+                        ctx.fillStyle = 'rgba(100, 150, 255, 0.6)';
+                        ctx.beginPath();
+                        ctx.arc(0, -10, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.restore();
+                    }
+                }
+                
+                // Moon
+                if (altitude > 1200) {
+                    const moonY = game.groundLevel - 1500;
+                    const screenY = moonY + game.camera.y;
+                    if (screenY > -300 && screenY < displayHeight + 300) {
+                        const moonX = displayWidth * 0.8;
+                        
+                        ctx.save();
+                        ctx.translate(moonX, moonY);
+                        
+                        // Moon body
+                        ctx.fillStyle = 'rgba(230, 230, 235, 0.9)';
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 60, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        // Craters
+                        ctx.fillStyle = 'rgba(180, 180, 185, 0.5)';
+                        ctx.beginPath();
+                        ctx.arc(-15, -10, 12, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(20, 5, 8, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(-10, 20, 10, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(15, -25, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.restore();
+                    }
+                }
+                
+                // Planets
+                if (altitude > 1800) {
+                    // Mars-like planet
+                    const marsY = game.groundLevel - 2200;
+                    const marsScreenY = marsY + game.camera.y;
+                    if (marsScreenY > -200 && marsScreenY < displayHeight + 200) {
+                        const marsX = displayWidth * 0.2;
+                        
+                        ctx.save();
+                        ctx.translate(marsX, marsY);
+                        
+                        // Planet body
+                        ctx.fillStyle = 'rgba(200, 100, 80, 0.7)';
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 45, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        // Surface features
+                        ctx.fillStyle = 'rgba(180, 80, 60, 0.4)';
+                        ctx.beginPath();
+                        ctx.arc(-10, -15, 15, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(15, 10, 12, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.restore();
+                    }
+                    
+                    // Gas giant
+                    const jupiterY = game.groundLevel - 2800;
+                    if (jupiterY > -300 && jupiterY < displayHeight + 300) {
+                        const jupiterX = displayWidth * 0.7;
+                        
+                        ctx.save();
+                        ctx.translate(jupiterX, jupiterY);
+                        
+                        // Planet body
+                        ctx.fillStyle = 'rgba(210, 170, 140, 0.8)';
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 80, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        // Bands
+                        ctx.strokeStyle = 'rgba(180, 140, 110, 0.5)';
+                        ctx.lineWidth = 8;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 80, 0.3, Math.PI - 0.3);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 80, Math.PI + 0.5, Math.PI * 2 - 0.5);
+                        ctx.stroke();
+                        
+                        // Great Red Spot
+                        ctx.fillStyle = 'rgba(200, 100, 80, 0.6)';
+                        ctx.beginPath();
+                        ctx.ellipse(25, 10, 18, 12, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        ctx.restore();
+                    }
+                }
+            }
+        }
 
         // Render
         function render() {
-            // Clear and draw sky background
+            // Calculate altitude-based sky color (static background, no scrolling)
+            const altitude = game.maxHeight;
+            let skyColor1, skyColor2;
+            
+            if (altitude < 500) {
+                // Low altitude: Bright blue sky
+                const t = altitude / 500;
+                skyColor1 = interpolateColor('#87ceeb', '#4a90e2', t);
+                skyColor2 = interpolateColor('#b0e0ff', '#87ceeb', t);
+            } else if (altitude < 1000) {
+                // Medium altitude: Darker blue, approaching atmosphere edge
+                const t = (altitude - 500) / 500;
+                skyColor1 = interpolateColor('#4a90e2', '#2c5f8d', t);
+                skyColor2 = interpolateColor('#87ceeb', '#4a90e2', t);
+            } else if (altitude < 2000) {
+                // High altitude: Deep blue to black, entering space
+                const t = (altitude - 1000) / 1000;
+                skyColor1 = interpolateColor('#2c5f8d', '#0a1929', t);
+                skyColor2 = interpolateColor('#4a90e2', '#1a2f4a', t);
+            } else {
+                // Space: Black with stars
+                skyColor1 = '#000814';
+                skyColor2 = '#0a1929';
+            }
+            
             const skyGradient = ctx.createLinearGradient(0, 0, 0, displayHeight);
-            skyGradient.addColorStop(0, '#87ceeb');
-            skyGradient.addColorStop(0.6, '#b8d4ea');
-            skyGradient.addColorStop(1, '#e8d5c4');
+            skyGradient.addColorStop(0, skyColor1);
+            skyGradient.addColorStop(1, skyColor2);
             ctx.fillStyle = skyGradient;
             ctx.fillRect(0, 0, displayWidth, displayHeight);
             
-            // Draw distant mountains in background
-            ctx.fillStyle = 'rgba(120, 100, 80, 0.2)';
-            ctx.beginPath();
-            ctx.moveTo(0, displayHeight * 0.7);
-            for (let i = 0; i <= displayWidth; i += 50) {
-                ctx.lineTo(i, displayHeight * 0.7 + Math.sin(i * 0.01) * 30);
-            }
-            ctx.lineTo(displayWidth, displayHeight);
-            ctx.lineTo(0, displayHeight);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Draw animated clouds
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-            for (let i = 0; i < 8; i++) {
-                const x = (i * 283.7 + game.time * 10) % (displayWidth + 100) - 50;
-                const y = ((i * 157.3) % (displayHeight * 0.4));
-                ctx.beginPath();
-                ctx.ellipse(x, y, 50 + i * 4, 25 + i * 2, 0, 0, Math.PI * 2);
-                ctx.fill();
+            // Draw stars in space (altitude > 1000m)
+            if (altitude > 800) {
+                const starOpacity = Math.min((altitude - 800) / 400, 1);
+                ctx.fillStyle = `rgba(255, 255, 255, ${starOpacity * 0.8})`;
+                // Static star positions based on seed
+                for (let i = 0; i < 100; i++) {
+                    const seed = i * 1234.567;
+                    const x = (seed % 1000 / 1000) * displayWidth;
+                    const y = ((seed * 1.234) % 1000 / 1000) * displayHeight;
+                    const size = ((seed * 2.345) % 100 / 100) * 2;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
             
             ctx.save();
             ctx.translate(0, -game.camera.y);
+            
+            // Draw landmarks based on altitude zones (in world space)
+            drawLandmarks(ctx, game.maxHeight);
             
             // Draw cliff face with realistic vertical columns
             const baseCliffWidth = displayWidth * 0.6;
@@ -1391,6 +2855,65 @@
                 }
             }
             
+            // Draw summit platform for multiplayer at 1000m
+            if (game.mode === 'multiplayer') {
+                const summitY = game.groundLevel - (1000 * 10);
+                if (summitY > game.camera.y - 200 && summitY < game.camera.y + displayHeight + 200) {
+                    const summitBounds = getCliffBounds(summitY);
+                    const summitWidth = summitBounds.right - summitBounds.left;
+                    
+                    // Summit platform (flat top)
+                    ctx.fillStyle = '#9d8f7f';
+                    ctx.fillRect(summitBounds.left, summitY - 30, summitWidth, 30);
+                    
+                    // Summit edge highlight
+                    ctx.fillStyle = '#b8a89f';
+                    ctx.fillRect(summitBounds.left, summitY - 30, summitWidth, 5);
+                    
+                    // Snow cap on summit
+                    ctx.fillStyle = '#ffffff';
+                    ctx.globalAlpha = 0.7;
+                    ctx.fillRect(summitBounds.left, summitY - 30, summitWidth, 10);
+                    ctx.globalAlpha = 1;
+                    
+                    // Victory flag at summit
+                    const flagX = summitBounds.center;
+                    const flagY = summitY - 30;
+                    
+                    // Flag pole
+                    ctx.strokeStyle = '#654321';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(flagX, flagY);
+                    ctx.lineTo(flagX, flagY - 60);
+                    ctx.stroke();
+                    
+                    // Waving flag
+                    const wave = Math.sin(game.time * 3) * 5;
+                    ctx.fillStyle = '#ffd700';
+                    ctx.beginPath();
+                    ctx.moveTo(flagX, flagY - 60);
+                    ctx.lineTo(flagX + 40 + wave, flagY - 50);
+                    ctx.lineTo(flagX + wave, flagY - 40);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    // Victory text on flag
+                    ctx.fillStyle = '#654321';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('🏆', flagX + 20 + wave/2, flagY - 47);
+                    
+                    // "FINISH" text below summit
+                    ctx.fillStyle = '#ffd700';
+                    ctx.font = 'bold 24px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+                    ctx.shadowBlur = 10;
+                    ctx.fillText('🏁 FINISH LINE 🏁', summitBounds.center, summitY - 60);
+                    ctx.shadowBlur = 0;
+                }
+            }
             
             // Draw milestone markers as white translucent dashed lines
             for (let milestone of game.milestones) {
@@ -1775,24 +3298,10 @@
             ctx.ellipse(0, game.player.radius + 3, game.player.radius * 0.8, 3, 0, 0, Math.PI * 2);
             ctx.fill();
             
-            // Body
-            ctx.fillStyle = skin.color;
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-            ctx.shadowBlur = 8;
-            ctx.beginPath();
-            ctx.arc(0, 0, game.player.radius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.shadowBlur = 0;
+            // Draw character based on skin type
+            drawCharacter(ctx, skin, game.player);
             
-            // Backpack
-            ctx.fillStyle = '#654321';
-            ctx.fillRect(-8, -2, 16, 12);
-            
-            // Animated limbs
-            ctx.strokeStyle = skin.color;
-            ctx.lineWidth = 4;
-            ctx.lineCap = 'round';
-            
+            ctx.restore();
             if (game.player.celebrating) {
                 // Victory pose - arms raised
                 const wave = Math.sin(game.player.armAnimation) * 10;
@@ -1857,6 +3366,45 @@
             ctx.globalAlpha = 1;
             
             ctx.restore();
+            
+            // Draw countdown for multiplayer
+            if (game.mode === 'multiplayer' && game.countdown > 0) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, displayWidth, displayHeight);
+                
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 120px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+                ctx.shadowBlur = 20;
+                ctx.fillText(game.countdown, displayWidth / 2, displayHeight / 2);
+                
+                ctx.font = 'bold 32px Arial';
+                ctx.fillText('GET READY!', displayWidth / 2, displayHeight / 2 + 100);
+                
+                // Game tip about breakable holds
+                ctx.font = 'bold 24px Arial';
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('🔴 Red rocks break when', displayWidth / 2, displayHeight / 2 + 170);
+                ctx.fillText('jump power is over 80%!', displayWidth / 2, displayHeight / 2 + 205);
+                
+                ctx.restore();
+            }
+            
+            // Draw "GO!" when race starts
+            if (game.mode === 'multiplayer' && game.raceStarted && game.time < 1) {
+                ctx.save();
+                ctx.fillStyle = '#4ecdc4';
+                ctx.font = 'bold 100px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+                ctx.shadowBlur = 20;
+                ctx.fillText('GO!', displayWidth / 2, displayHeight / 2);
+                ctx.restore();
+            }
         }
         let touching = false;
         let touchId = null;
@@ -2189,6 +3737,19 @@
             releaseJump();
         });
 
+        // Check if multiplayer race is finished
+        function checkRaceFinish() {
+            game.raceFinished = true;
+            
+            // Determine player's position
+            const playerPosition = game.finishOrder.indexOf('YOU') + 1;
+            
+            // Show victory screen with position
+            setTimeout(() => {
+                winGame(playerPosition);
+            }, 1000);
+        }
+
         // NPC System for Multiplayer
         const npcNames = ['Alex', 'Sam', 'Riley', 'Jordan', 'Casey', 'Morgan'];
         const npcColors = ['#4ecdc4', '#ffe66d', '#95e1d3', '#a78bfa', '#ff9a56', '#ff6b9d'];
@@ -2201,7 +3762,7 @@
                 game.npcs.push({
                     name: npcNames[i],
                     color: npcColors[i],
-                    x: displayWidth / 2 + (Math.random() - 0.5) * 100,
+                    x: displayWidth / 2,
                     y: game.groundLevel - 60,
                     vx: 0,
                     vy: 0,
@@ -2212,22 +3773,36 @@
                     snapProgress: 0,
                     rotation: 0,
                     height: 0,
-                    nextJumpTime: Date.now() + Math.random() * 1500 + 500,
-                    skill: 0.75 + Math.random() * 0.25, // 0.75-1.0 skill level (much better)
-                    reactionTime: 300 + Math.random() * 200, // 300-500ms reaction time
-                    targetHold: null
+                    nextJumpTime: Date.now() + 999999, // Will be set after countdown
+                    skill: 0.75 + Math.random() * 0.25,
+                    reactionTime: 300 + Math.random() * 200,
+                    targetHold: null,
+                    finished: false
                 });
             }
         }
         
         function updateNPCs(dt) {
             if (game.mode !== 'multiplayer') return;
+            if (!game.raceStarted) return; // Don't move during countdown
             
             const currentTime = Date.now();
             
             for (let npc of game.npcs) {
+                // Skip if already finished
+                if (npc.finished) continue;
+                
                 // Update height
                 npc.height = Math.max(0, Math.floor((game.groundLevel - npc.y) / 10));
+                
+                // Check if NPC reached 1000m
+                if (npc.height >= 1000 && !game.raceFinished) {
+                    npc.finished = true;
+                    game.finishOrder.push(npc.name);
+                    
+                    // Check if all racers finished
+                    checkRaceFinish();
+                }
                 
                 // Handle snapping
                 if (npc.snapping && npc.currentHold) {
@@ -2242,8 +3817,8 @@
                         npc.y = npc.currentHold.y - npc.currentHold.height / 2 - npc.radius;
                         npc.targetHold = null;
                         
-                        // Schedule next jump based on skill (better NPCs jump faster)
-                        npc.nextJumpTime = currentTime + npc.reactionTime / npc.skill;
+                        // Schedule next jump (3x slower than before)
+                        npc.nextJumpTime = currentTime + (npc.reactionTime / npc.skill) * 3;
                     } else {
                         const targetX = npc.currentHold.x;
                         const targetY = npc.currentHold.y - npc.currentHold.height / 2 - npc.radius;
@@ -2306,7 +3881,7 @@
                     npc.grounded = true;
                     npc.height = 0;
                     npc.currentHold = game.holds[0];
-                    npc.nextJumpTime = currentTime + 2000;
+                    npc.nextJumpTime = currentTime + 6000; // 3x slower (was 2000ms)
                 }
             }
         }
@@ -2412,13 +3987,22 @@
                 document.getElementById('heightDisplay').textContent = `Height: ${game.height}m`;
                 document.getElementById('coinsDisplay').textContent = `🪙 ${game.coins}`;
                 
-                // Update timer display in solo mode
+                // Update timer and checkpoint distance in solo mode
                 if (game.mode === 'solo') {
                     const minutes = Math.floor(game.timer / 60);
                     const seconds = Math.floor(game.timer % 60);
                     const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
                     const timerColor = game.timer < 10 ? '#ff6b6b' : '#4ecdc4';
-                    document.getElementById('heightDisplay').textContent = `⏱️ ${timeStr} • ${game.height}m`;
+                    
+                    // Find next checkpoint
+                    const nextCheckpoint = game.milestones.find(m => m > game.height);
+                    const distanceToNext = nextCheckpoint ? nextCheckpoint - game.height : 0;
+                    
+                    if (nextCheckpoint) {
+                        document.getElementById('heightDisplay').textContent = `⏱️ ${timeStr} • ${game.height}m • ⏱️${distanceToNext}m`;
+                    } else {
+                        document.getElementById('heightDisplay').textContent = `⏱️ ${timeStr} • ${game.height}m`;
+                    }
                     document.getElementById('heightDisplay').style.color = timerColor;
                 } else {
                     document.getElementById('heightDisplay').style.color = '#d4a78a';
@@ -2427,6 +4011,24 @@
             
             render();
             requestAnimationFrame(gameLoop);
+        }
+
+        // Countdown for multiplayer start
+        function startCountdown() {
+            const countdownInterval = setInterval(() => {
+                game.countdown--;
+                
+                if (game.countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    game.raceStarted = true;
+                    
+                    // Enable all NPCs to start jumping (3x slower than before)
+                    const now = Date.now();
+                    for (let npc of game.npcs) {
+                        npc.nextJumpTime = now + (Math.random() * 500 + 200) * 3;
+                    }
+                }
+            }, 1000);
         }
 
         // Game controls
@@ -2443,13 +4045,20 @@
             game.player.aimMode = false;
             game.lastMilestone = 0;
             game.checkpointsCollected = [];
+            game.finishOrder = [];
+            game.raceFinished = false;
             
-            // Initialize timer for solo mode
+            // Initialize timer/countdown based on mode
             if (mode === 'solo') {
-                game.timer = 30;
+                game.timer = 30 + game.activePowerUps.bonusTime; // Apply extra time power-up
                 game.timerActive = true;
+                game.countdown = 0;
+                game.raceStarted = true;
             } else {
+                // Multiplayer: Start with countdown
                 game.timerActive = false;
+                game.countdown = 3;
+                game.raceStarted = false;
             }
             
             // Initialize NPCs for multiplayer
@@ -2477,6 +4086,11 @@
             document.getElementById('powerFill').style.width = '50%';
             document.getElementById('powerPercentage').textContent = '50%';
             
+            // Start countdown for multiplayer
+            if (mode === 'multiplayer') {
+                startCountdown();
+            }
+            
             setTimeout(() => {
                 document.getElementById('instruction').style.display = 'none';
             }, 4000);
@@ -2486,6 +4100,7 @@
             game.state = 'start';
             document.getElementById('startScreen').classList.add('active');
             document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('storeScreen').classList.remove('active');
             
             const skinsScreen = document.getElementById('skinsScreen');
             if (skinsScreen) {
@@ -2495,6 +4110,261 @@
             document.getElementById('powerBar').style.display = 'none';
             document.getElementById('heightRuler').style.display = 'none';
             document.getElementById('totalCoins').textContent = game.totalCoins;
+        };
+        
+        // Store functions
+        game.showStore = function() {
+            document.getElementById('startScreen').classList.remove('active');
+            document.getElementById('storeScreen').classList.add('active');
+            document.getElementById('storeCoins').textContent = game.totalCoins;
+            game.showStoreTab('skins');
+        };
+        
+        game.showStoreTab = function(tab) {
+            const skinsTab = document.getElementById('skinsTab');
+            const powerupsTab = document.getElementById('powerupsTab');
+            const upgradesTab = document.getElementById('upgradesTab');
+            
+            // Reset all tab styles
+            skinsTab.style.background = '#666';
+            powerupsTab.style.background = '#666';
+            upgradesTab.style.background = '#666';
+            
+            // Highlight active tab
+            if (tab === 'skins') {
+                skinsTab.style.background = '#8b7355';
+                game.renderSkins();
+            } else if (tab === 'powerups') {
+                powerupsTab.style.background = '#8b7355';
+                game.renderPowerUps();
+            } else {
+                upgradesTab.style.background = '#8b7355';
+                game.renderUpgrades();
+            }
+        };
+        
+        game.renderSkins = function() {
+            const storeContent = document.getElementById('storeContent');
+            let html = '';
+            
+            // Group skins by category
+            const categories = ['Starter', 'Animals', 'Heroes', 'Villains', 'Fantasy', 'Robots', 'Legendary'];
+            
+            for (let category of categories) {
+                const categorySkins = Object.entries(skins).filter(([key, skin]) => skin.category === category);
+                if (categorySkins.length === 0) continue;
+                
+                html += `<div style="margin-bottom: 25px;">`;
+                html += `<h3 style="color: #ffd700; text-align: center; margin-bottom: 15px; font-size: 20px;">${category} Collection</h3>`;
+                html += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">`;
+                
+                for (let [key, skin] of categorySkins) {
+                    const owned = game.ownedSkins.includes(key);
+                    const equipped = game.selectedSkin === key;
+                    const canAfford = game.totalCoins >= skin.cost;
+                    
+                    let buttonStyle = '';
+                    let buttonText = '';
+                    let onclick = '';
+                    
+                    if (equipped) {
+                        buttonStyle = 'background: #2ecc71; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); color: #fff; cursor: default; font-weight: 600;';
+                        buttonText = '✓ EQUIPPED';
+                        onclick = '';
+                    } else if (owned) {
+                        buttonStyle = 'background: #3498db; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); color: #fff; font-weight: 600;';
+                        buttonText = 'EQUIP';
+                        onclick = `onclick="game.equipSkin('${key}')"`;
+                    } else if (canAfford) {
+                        buttonStyle = 'background: #ffd700; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); color: #000; font-weight: 700;';
+                        buttonText = `BUY ${skin.cost.toLocaleString()}🪙`;
+                        onclick = `onclick="game.buySkin('${key}')"`;
+                    } else {
+                        buttonStyle = 'background: rgba(80,80,80,0.5); border: 1px solid rgba(0,0,0,0.2); color: rgba(180,180,180,0.7); cursor: not-allowed; font-weight: 600;';
+                        buttonText = `${skin.cost.toLocaleString()}🪙`;
+                        onclick = '';
+                    }
+                    
+                    const borderColor = skin.colors?.primary || '#8b7355';
+                    const canvasId = `skin-preview-${key}`;
+                    
+                    html += `
+                        <div style="background: rgba(20,20,20,0.75); padding: 14px; text-align: center; border: 1px solid rgba(${borderColor === '#8b7355' ? '139,115,85' : '100,100,100'},0.4); border-bottom: 2px solid rgba(${borderColor === '#8b7355' ? '139,115,85' : '100,100,100'},0.5); border-radius: 8px;">
+                            <canvas id="${canvasId}" width="80" height="80" style="display: block; margin: 0 auto 10px;"></canvas>
+                            <div style="color: rgba(255,255,255,0.95); font-weight: 700; font-size: 14px; margin-bottom: 5px; min-height: 32px; display: flex; align-items: center; justify-content: center; letter-spacing: 0.2px;">${skin.name}</div>
+                            <div style="color: rgba(212,167,138,0.8); font-size: 11px; margin-bottom: 12px; min-height: 30px; font-weight: 500; line-height: 1.3;">${skin.description}</div>
+                            <button ${onclick} style="padding: 9px 12px; font-size: 12px; width: 100%; ${buttonStyle} cursor: pointer; letter-spacing: 0.3px; transition: all 0.15s ease; border-radius: 6px;">${buttonText}</button>
+                        </div>
+                    `;
+                }
+                
+                html += `</div></div>`;
+            }
+            
+            storeContent.innerHTML = html;
+            
+            // Draw character previews on canvases
+            for (let category of categories) {
+                const categorySkins = Object.entries(skins).filter(([key, skin]) => skin.category === category);
+                for (let [key, skin] of categorySkins) {
+                    const canvas = document.getElementById(`skin-preview-${key}`);
+                    if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, 80, 80);
+                        
+                        // Draw background
+                        ctx.fillStyle = 'rgba(40, 30, 20, 0.5)';
+                        ctx.fillRect(0, 0, 80, 80);
+                        
+                        // Draw character centered
+                        ctx.save();
+                        ctx.translate(40, 40);
+                        
+                        // Create a mock player object for drawing
+                        const mockPlayer = {
+                            radius: 20,
+                            armAnimation: 0,
+                            legAnimation: 0
+                        };
+                        
+                        drawCharacter(ctx, skin, mockPlayer);
+                        ctx.restore();
+                    }
+                }
+            }
+        };
+        
+        game.renderPowerUps = function() {
+            const storeContent = document.getElementById('storeContent');
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">';
+            
+            for (let [key, powerUp] of Object.entries(powerUps)) {
+                const canAfford = game.totalCoins >= powerUp.cost;
+                const buttonStyle = canAfford 
+                    ? 'background: #ffd700; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); color: #000; font-weight: 700;'
+                    : 'background: rgba(80,80,80,0.5); border: 1px solid rgba(0,0,0,0.2); color: rgba(180,180,180,0.7); cursor: not-allowed; font-weight: 600;';
+                const onclick = canAfford ? `onclick="game.buyPowerUp('${key}')"` : '';
+                
+                html += `
+                    <div style="background: rgba(20,20,20,0.75); padding: 22px 18px; text-align: center; border: 1px solid rgba(139,115,85,0.3); border-bottom: 2px solid rgba(139,115,85,0.4); border-radius: 10px;">
+                        <div style="font-size: 52px; margin-bottom: 12px;">${powerUp.icon}</div>
+                        <div style="color: rgba(255,215,0,0.95); font-weight: 700; font-size: 17px; margin-bottom: 6px; letter-spacing: 0.3px;">${powerUp.name}</div>
+                        <div style="color: rgba(212,167,138,0.85); font-size: 13px; margin-bottom: 16px; min-height: 40px; line-height: 1.4; font-weight: 500;">${powerUp.description}</div>
+                        <button ${onclick} style="padding: 11px 16px; font-size: 13px; width: 100%; ${buttonStyle} cursor: pointer; letter-spacing: 0.4px; transition: all 0.15s ease; border-radius: 6px;">
+                            BUY ${powerUp.cost.toLocaleString()}🪙
+                        </button>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            storeContent.innerHTML = html;
+        };
+        
+        game.renderUpgrades = function() {
+            const storeContent = document.getElementById('storeContent');
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">';
+            
+            for (let [key, upgrade] of Object.entries(upgrades)) {
+                const owned = game.ownedUpgrades.includes(key);
+                const canAfford = game.totalCoins >= upgrade.cost;
+                const meetsRequirements = !upgrade.requires || game.ownedUpgrades.includes(upgrade.requires);
+                
+                let buttonStyle = '';
+                let buttonText = '';
+                let onclick = '';
+                let borderColor = 'rgba(139,115,85,0.4)';
+                
+                if (owned) {
+                    buttonStyle = 'background: #2ecc71; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); color: #fff; cursor: default; font-weight: 600;';
+                    buttonText = '✓ OWNED';
+                    onclick = '';
+                    borderColor = 'rgba(46,204,113,0.5)';
+                } else if (!meetsRequirements) {
+                    buttonStyle = 'background: rgba(60,60,60,0.5); border: 1px solid rgba(0,0,0,0.2); color: rgba(150,150,150,0.7); cursor: not-allowed; font-weight: 600;';
+                    buttonText = `🔒 LOCKED`;
+                    onclick = '';
+                } else if (canAfford) {
+                    buttonStyle = 'background: #ffd700; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); color: #000; font-weight: 700;';
+                    buttonText = `BUY ${upgrade.cost.toLocaleString()}🪙`;
+                    onclick = `onclick="game.buyUpgrade('${key}')"`;
+                } else {
+                    buttonStyle = 'background: rgba(80,80,80,0.5); border: 1px solid rgba(0,0,0,0.2); color: rgba(180,180,180,0.7); cursor: not-allowed; font-weight: 600;';
+                    buttonText = `${upgrade.cost.toLocaleString()}🪙`;
+                    onclick = '';
+                }
+                
+                const requiresText = upgrade.requires ? `<div style="color: rgba(231,76,60,0.9); font-size: 11px; margin-top: 6px; font-weight: 500;">🔒 ${upgrades[upgrade.requires]?.name}</div>` : '';
+                const stackInfo = upgrade.stackable && upgrade.stackInfo ? `<div style="color: rgba(52,152,219,0.9); font-size: 10px; margin-top: 4px; font-weight: 500;">↗️ ${upgrade.stackInfo}</div>` : '';
+                
+                html += `
+                    <div style="background: rgba(20,20,20,0.75); padding: 22px 18px; text-align: center; border: 1px solid ${borderColor}; border-bottom: 2px solid ${borderColor}; border-radius: 10px;">
+                        <div style="font-size: 52px; margin-bottom: 12px;">${upgrade.icon}</div>
+                        <div style="color: rgba(255,215,0,0.95); font-weight: 700; font-size: 17px; margin-bottom: 6px; letter-spacing: 0.3px;">${upgrade.name}</div>
+                        <div style="color: rgba(212,167,138,0.85); font-size: 13px; margin-bottom: 10px; min-height: 40px; line-height: 1.4; font-weight: 500;">${upgrade.description}</div>
+                        ${requiresText}
+                        ${stackInfo}
+                        <button ${onclick} style="padding: 11px 16px; font-size: 13px; width: 100%; margin-top: 12px; ${buttonStyle} cursor: pointer; letter-spacing: 0.4px; transition: all 0.15s ease; border-radius: 6px;">
+                            ${buttonText}
+                        </button>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            storeContent.innerHTML = html;
+        };
+        
+        game.buySkin = function(skinKey) {
+            const skin = skins[skinKey];
+            if (game.totalCoins >= skin.cost) {
+                game.totalCoins -= skin.cost;
+                game.ownedSkins.push(skinKey);
+                localStorage.setItem('climberCoins', game.totalCoins);
+                localStorage.setItem('ownedSkins', JSON.stringify(game.ownedSkins));
+                document.getElementById('storeCoins').textContent = game.totalCoins;
+                game.renderSkins();
+            }
+        };
+        
+        game.equipSkin = function(skinKey) {
+            game.selectedSkin = skinKey;
+            game.player.skin = skinKey;
+            localStorage.setItem('selectedSkin', skinKey);
+            game.renderSkins();
+        };
+        
+        game.buyPowerUp = function(powerUpKey) {
+            const powerUp = powerUps[powerUpKey];
+            if (game.totalCoins >= powerUp.cost) {
+                game.totalCoins -= powerUp.cost;
+                localStorage.setItem('climberCoins', game.totalCoins);
+                document.getElementById('storeCoins').textContent = game.totalCoins;
+                
+                // Activate power-up
+                game.activePowerUps[powerUp.effect] = true;
+                if (powerUp.effect === 'coinMultiplier') game.activePowerUps.coinMultiplier = 2;
+                if (powerUp.effect === 'bonusTime') game.activePowerUps.bonusTime = 30;
+                
+                alert(`${powerUp.icon} ${powerUp.name} activated! Will be used in your next game.`);
+                game.renderPowerUps();
+            }
+        };
+        
+        game.buyUpgrade = function(upgradeKey) {
+            const upgrade = upgrades[upgradeKey];
+            const meetsRequirements = !upgrade.requires || game.ownedUpgrades.includes(upgrade.requires);
+            
+            if (game.totalCoins >= upgrade.cost && meetsRequirements && !game.ownedUpgrades.includes(upgradeKey)) {
+                game.totalCoins -= upgrade.cost;
+                game.ownedUpgrades.push(upgradeKey);
+                localStorage.setItem('climberCoins', game.totalCoins);
+                localStorage.setItem('ownedUpgrades', JSON.stringify(game.ownedUpgrades));
+                document.getElementById('storeCoins').textContent = game.totalCoins;
+                
+                alert(`${upgrade.icon} ${upgrade.name} purchased! This permanent upgrade is now active.`);
+                game.renderUpgrades();
+            }
         };
 
         game.showSkins = function() {
