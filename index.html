@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Climb from Earth to space! Race against time, unlock 35+ character skins, and reach for the stars in this addictive mobile climbing game.">
+    <meta name="theme-color" content="#4a90e2">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-fullscreen">
     <meta name="mobile-web-app-capable" content="yes">
@@ -145,42 +147,6 @@
         }
 
         /* Height Ruler - Mobile Optimized */
-        .height-ruler {
-            position: absolute;
-            left: 10px;
-            top: calc(env(safe-area-inset-top, 10px) + 80px);
-            bottom: calc(env(safe-area-inset-bottom, 20px) + 120px);
-            width: 50px;
-            background: rgba(40, 30, 20, 0.85);
-            border-radius: 8px;
-            z-index: 4;
-            border: 2px solid rgba(139, 115, 85, 0.6);
-            overflow: hidden;
-            display: none;
-        }
-
-        .ruler-bg {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .ruler-marker {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: rgba(139, 115, 85, 0.5);
-            left: 0;
-        }
-
-        .ruler-text {
-            position: absolute;
-            left: 55px;
-            font-size: 11px;
-            color: #d4a78a;
-            font-weight: bold;
-            
-            white-space: nowrap;
         }
 
         /* Leaderboard - Mobile Optimized */
@@ -344,6 +310,15 @@
             0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
             100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        body {
+            animation: fadeIn 0.5s ease-in;
+        }
     </style>
 </head>
 <body>
@@ -361,9 +336,18 @@
         <div class="hud-right" id="coinsDisplay">🪙 0</div>
     </div>
 
-    <div class="height-ruler" id="heightRuler">
-        <div class="ruler-bg" id="rulerBg"></div>
     </div>
+    
+    <!-- Warp UI -->
+    <div id="warpUI" style="position: fixed; top: calc(env(safe-area-inset-top, 20px) + 20px); right: calc(env(safe-area-inset-right, 20px) + 20px); z-index: 15; background: rgba(30, 25, 20, 0.95); padding: 12px 16px; border: 1px solid rgba(200, 170, 130, 0.3); border-bottom: 2px solid rgba(200, 170, 130, 0.4); border-radius: 6px; display: none; flex-direction: column; gap: 8px; min-width: 180px;">
+        <div style="color: #ffd700; font-weight: 700; font-size: 14px; letter-spacing: 0.3px; text-align: center;">⚡ WARP</div>
+        <input type="number" id="warpInput" placeholder="Altitude (m)" min="0" step="10" onkeypress="if(event.key==='Enter')game.warpToAltitude()" style="padding: 8px 12px; font-size: 15px; font-weight: 600; background: rgba(50, 40, 30, 0.8); border: 1px solid rgba(200, 170, 130, 0.3); border-radius: 4px; color: #fff; text-align: center; font-family: 'Arial', sans-serif;">
+        <button onclick="game.warpToAltitude()" style="padding: 10px 16px; font-size: 14px; font-weight: 600; color: #fff; background: #d4a03c; border: 1px solid rgba(0,0,0,0.15); border-bottom: 2px solid rgba(0,0,0,0.25); border-radius: 6px; cursor: pointer; letter-spacing: 0.3px; transition: all 0.15s ease;">🚀 WARP</button>
+        <button onclick="game.toggleWarp()" style="padding: 6px 12px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.7); background: rgba(100,80,60,0.5); border: 1px solid rgba(0,0,0,0.2); border-radius: 4px; cursor: pointer;">CLOSE</button>
+    </div>
+    
+    <!-- Warp Toggle Button (hidden by default, shown via Konami code) -->
+    <button id="warpToggle" onclick="game.toggleWarp()" style="position: fixed; top: calc(env(safe-area-inset-top, 20px) + 20px); right: calc(env(safe-area-inset-right, 20px) + 20px); z-index: 10; padding: 10px 14px; font-size: 18px; background: rgba(212, 160, 60, 0.9); border: 1px solid rgba(0,0,0,0.2); border-bottom: 2px solid rgba(0,0,0,0.3); border-radius: 6px; cursor: pointer; display: none;">⚡</button>
 
     <!-- Multiplayer Leaderboard -->
     <div id="leaderboard">
@@ -388,6 +372,7 @@
         <button class="btn" onclick="game.startGame('multiplayer')" style="background: #6b8e23; border-color: rgba(0,0,0,0.2);">👥 MULTIPLAYER</button>
         <button class="btn" onclick="game.showStore()" style="background: #d4a03c; border-color: rgba(0,0,0,0.2);">🏪 STORE</button>
         <div class="coins-display">🪙 <span id="totalCoins">0</span></div>
+        <div style="position: absolute; bottom: 20px; color: rgba(255,255,255,0.3); font-size: 12px; font-weight: 500;">v1.0</div>
     </div>
 
     <!-- Store Screen -->
@@ -1356,10 +1341,12 @@
                     addMilestoneFlag(milestone);
                     game.coins += Math.floor(milestone / 50); // milestone/50 for better progression
                     
-                    // Add 20 seconds to timer in solo mode
+                    // Add progressively more time for each checkpoint
                     if (game.mode === 'solo' && game.timerActive) {
-                        game.timer += 20;
-                        showTimeBonus();
+                        const checkpointNumber = game.checkpointsCollected.length;
+                        const timeBonus = 20 + ((checkpointNumber - 1) * 3); // 20s, 23s, 26s, 29s, 32s...
+                        game.timer += timeBonus;
+                        showTimeBonus(timeBonus);
                     }
                     
                     vibrate(50);
@@ -3601,7 +3588,7 @@
             vibrate(20);
         }
 
-        function showTimeBonus() {
+        function showTimeBonus(seconds = 20) {
             const indicator = document.createElement('div');
             indicator.style.position = 'absolute';
             indicator.style.top = '50%';
@@ -3613,7 +3600,7 @@
             indicator.style.textShadow = '0 0 20px rgba(78, 205, 196, 0.8), 0 4px 8px rgba(0, 0, 0, 0.8)';
             indicator.style.zIndex = '100';
             indicator.style.pointerEvents = 'none';
-            indicator.textContent = '⏱️ +20 SECONDS!';
+            indicator.textContent = `⏱️ +${seconds} SECONDS!`;
             indicator.style.animation = 'fadeOut 1.5s ease-out';
             
             document.body.appendChild(indicator);
@@ -3939,6 +3926,53 @@
             npc.snapping = false;
             npc.currentHold = null;
         }
+        
+        // Konami Code Easter Egg (↑↑↓↓←→←→BA + Enter)
+        let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a', 'Enter'];
+        let konamiIndex = 0;
+        let konamiUnlocked = false;
+        
+        document.addEventListener('keydown', function(e) {
+            // Check if the key matches the next key in the sequence
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                
+                // If we've completed the sequence
+                if (konamiIndex === konamiCode.length) {
+                    konamiUnlocked = true;
+                    konamiIndex = 0;
+                    
+                    // Show warp button with flash effect
+                    const warpToggle = document.getElementById('warpToggle');
+                    if (warpToggle && game.state === 'playing') {
+                        warpToggle.style.display = 'block';
+                        
+                        // Flash effect to indicate unlock
+                        const flash = document.createElement('div');
+                        flash.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(212, 160, 60, 0.4); pointer-events: none; z-index: 100;';
+                        document.body.appendChild(flash);
+                        setTimeout(() => flash.remove(), 300);
+                        
+                        // Play success sound (visual feedback)
+                        warpToggle.style.animation = 'pulse 0.5s ease-in-out';
+                        setTimeout(() => warpToggle.style.animation = '', 500);
+                    }
+                }
+            } else {
+                // Reset if wrong key pressed
+                konamiIndex = 0;
+            }
+        });
+        
+        // CSS animation for warp button unlock
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Game loop with FPS limiting for mobile battery life
         let lastTime = Date.now();
@@ -4079,12 +4113,19 @@
             }
             
             document.getElementById('powerBar').style.display = 'block';
-            document.getElementById('heightRuler').style.display = 'block';
             document.getElementById('instruction').style.display = 'block';
             
             // Reset power bar display
             document.getElementById('powerFill').style.width = '50%';
             document.getElementById('powerPercentage').textContent = '50%';
+            
+            // Show warp toggle button only if Konami code unlocked
+            if (konamiUnlocked) {
+                document.getElementById('warpToggle').style.display = 'block';
+            } else {
+                document.getElementById('warpToggle').style.display = 'none';
+            }
+            document.getElementById('warpUI').style.display = 'none';
             
             // Start countdown for multiplayer
             if (mode === 'multiplayer') {
@@ -4108,8 +4149,84 @@
             }
             
             document.getElementById('powerBar').style.display = 'none';
-            document.getElementById('heightRuler').style.display = 'none';
+            document.getElementById('warpToggle').style.display = 'none';
+            document.getElementById('warpUI').style.display = 'none';
             document.getElementById('totalCoins').textContent = game.totalCoins;
+        };
+        
+        // Warp functions
+        game.toggleWarp = function() {
+            const warpUI = document.getElementById('warpUI');
+            const warpToggle = document.getElementById('warpToggle');
+            
+            if (warpUI.style.display === 'none' || warpUI.style.display === '') {
+                warpUI.style.display = 'flex';
+                warpToggle.style.display = 'none';
+                document.getElementById('warpInput').focus();
+            } else {
+                warpUI.style.display = 'none';
+                warpToggle.style.display = 'block';
+            }
+        };
+        
+        game.warpToAltitude = function() {
+            const targetAltitude = parseInt(document.getElementById('warpInput').value);
+            
+            if (isNaN(targetAltitude) || targetAltitude < 0) {
+                alert('Please enter a valid altitude (0 or higher)');
+                return;
+            }
+            
+            // Find closest hold to target altitude
+            let closestHold = null;
+            let closestDistance = Infinity;
+            
+            for (let hold of game.holds) {
+                const holdAltitude = game.groundLevel - hold.y;
+                const distance = Math.abs(holdAltitude - targetAltitude);
+                
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestHold = hold;
+                }
+            }
+            
+            if (closestHold) {
+                // Teleport player to the hold
+                game.player.x = closestHold.x;
+                game.player.y = closestHold.y - 60; // Above the hold
+                game.player.vy = 0;
+                game.player.vx = 0;
+                game.player.onHold = false;
+                game.player.currentHold = closestHold;
+                
+                // Update camera
+                game.camera.y = game.player.y - displayHeight / 2;
+                
+                // Update max height if warped higher
+                const warpedHeight = game.groundLevel - game.player.y;
+                if (warpedHeight > game.maxHeight) {
+                    game.maxHeight = warpedHeight;
+                }
+                
+                // Generate more holds if needed
+                while (game.holds[game.holds.length - 1].y > game.player.y - displayHeight * 3) {
+                    addHold();
+                }
+                
+                // Close warp UI
+                game.toggleWarp();
+                
+                // Visual feedback
+                const actualAltitude = Math.floor(game.groundLevel - closestHold.y);
+                document.getElementById('warpInput').value = '';
+                
+                // Flash effect
+                const flash = document.createElement('div');
+                flash.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(212, 160, 60, 0.3); pointer-events: none; z-index: 100;';
+                document.body.appendChild(flash);
+                setTimeout(() => flash.remove(), 200);
+            }
         };
         
         // Store functions
@@ -4435,7 +4552,6 @@
             vibrate(50);
             
             document.getElementById('powerBar').style.display = 'none';
-            document.getElementById('heightRuler').style.display = 'none';
             document.getElementById('finalHeight').textContent = game.maxHeight;
             document.getElementById('earnedCoins').textContent = game.coins;
             document.getElementById('gameOverScreen').classList.add('active');
