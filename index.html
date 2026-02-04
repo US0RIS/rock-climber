@@ -3296,7 +3296,7 @@
             ctx.shadowOffsetY = 0;
             
             // Draw trajectory if aiming
-            if (game.player.aimMode && game.player.grounded && game.player.powerPercent > 0) {
+            if (game.player.aimMode && game.player.grounded) {
                 const dx = game.player.aimCurrentX - game.player.x;
                 const dy = game.player.aimCurrentY - game.player.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
@@ -3307,7 +3307,42 @@
                     const finalPower = basePower * game.player.jumpBoost;
                     const hasBooost = game.player.jumpBoost > 1.05;
                     
-                    // Draw trajectory with boost coloring
+                    // Calculate high-resolution trajectory points for smooth snapping
+                    let trajectoryPoints = [];
+                    let px = game.player.x;
+                    let py = game.player.y;
+                    let pvx = Math.cos(angle) * finalPower;
+                    let pvy = Math.sin(angle) * finalPower;
+                    
+                    trajectoryPoints.push({x: px, y: py});
+                    // Increased from 8 to 40 steps for smoother trajectory
+                    const numSteps = 40;
+                    const dt = 0.02; // smaller time step
+                    for (let i = 0; i < numSteps; i++) {
+                        pvy += 1500 * dt;
+                        px += pvx * dt;
+                        py += pvy * dt;
+                        trajectoryPoints.push({x: px, y: py});
+                    }
+                    
+                    // Find closest point on trajectory to mouse
+                    let closestPoint = trajectoryPoints[0];
+                    let closestIndex = 0;
+                    let minDist = Infinity;
+                    for (let i = 0; i < trajectoryPoints.length; i++) {
+                        const point = trajectoryPoints[i];
+                        const d = Math.sqrt(
+                            Math.pow(point.x - game.player.aimCurrentX, 2) + 
+                            Math.pow(point.y - game.player.aimCurrentY, 2)
+                        );
+                        if (d < minDist) {
+                            minDist = d;
+                            closestPoint = point;
+                            closestIndex = i;
+                        }
+                    }
+                    
+                    // Draw trajectory with boost coloring (use every 5th point to keep dashed line visible)
                     ctx.strokeStyle = hasBooost ? 'rgba(255, 215, 0, 0.9)' : 'rgba(255, 255, 255, 0.6)';
                     ctx.lineWidth = hasBooost ? 5 : 3;
                     ctx.setLineDash([12, 12]);
@@ -3320,45 +3355,35 @@
                     ctx.beginPath();
                     ctx.moveTo(game.player.x, game.player.y);
                     
-                    let px = game.player.x;
-                    let py = game.player.y;
-                    let pvx = Math.cos(angle) * finalPower;
-                    let pvy = Math.sin(angle) * finalPower;
-                    
-                    for (let i = 0; i < 8; i++) {
-                        pvy += 1500 * 0.05;
-                        px += pvx * 0.05;
-                        py += pvy * 0.05;
-                        ctx.lineTo(px, py);
+                    // Draw trajectory line ONLY up to the cursor position
+                    for (let i = 1; i <= closestIndex; i += 2) {
+                        ctx.lineTo(trajectoryPoints[i].x, trajectoryPoints[i].y);
                     }
+                    // Make sure we end exactly at the closest point
+                    ctx.lineTo(closestPoint.x, closestPoint.y);
                     ctx.stroke();
                     ctx.setLineDash([]);
                     ctx.shadowBlur = 0;
                     
-                    // Draw sparkles along boosted trajectory
-                    if (hasBooost) {
+                    // Draw sparkles along boosted trajectory (only up to cursor)
+                    if (hasBooost && closestIndex > 0) {
                         ctx.fillStyle = '#ffd700';
-                        px = game.player.x;
-                        py = game.player.y;
-                        pvx = Math.cos(angle) * finalPower;
-                        pvy = Math.sin(angle) * finalPower;
-                        
                         for (let i = 0; i < 5; i++) {
-                            pvy += 1500 * 0.05;
-                            px += pvx * 0.05;
-                            py += pvy * 0.05;
-                            
-                            const sparkleSize = 2 + Math.sin(game.time * 8 + i) * 1;
-                            ctx.beginPath();
-                            ctx.arc(px, py, sparkleSize, 0, Math.PI * 2);
-                            ctx.fill();
+                            const pointIndex = Math.floor(i * closestIndex / 5);
+                            if (pointIndex < trajectoryPoints.length) {
+                                const point = trajectoryPoints[pointIndex];
+                                const sparkleSize = 2 + Math.sin(game.time * 8 + i) * 1;
+                                ctx.beginPath();
+                                ctx.arc(point.x, point.y, sparkleSize, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
                         }
                     }
                     
-                    // Draw aim point
+                    // Draw aim point ON THE TRAJECTORY LINE
                     ctx.fillStyle = hasBooost ? 'rgba(255, 215, 0, 0.9)' : 'rgba(139, 115, 85, 0.8)';
                     ctx.beginPath();
-                    ctx.arc(game.player.aimCurrentX, game.player.aimCurrentY, 10, 0, Math.PI * 2);
+                    ctx.arc(closestPoint.x, closestPoint.y, 10, 0, Math.PI * 2);
                     ctx.fill();
                     
                     ctx.strokeStyle = '#fff';
@@ -3371,7 +3396,7 @@
                         ctx.font = 'bold 14px Arial';
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
-                        ctx.fillText(`x${game.player.jumpBoost.toFixed(1)}`, game.player.aimCurrentX, game.player.aimCurrentY - 20);
+                        ctx.fillText(`x${game.player.jumpBoost.toFixed(1)}`, closestPoint.x, closestPoint.y - 20);
                     }
                 }
             }
@@ -3624,8 +3649,6 @@
             if (!game.player.aimMode) return;
             
             const worldY = y + game.camera.y;
-            game.player.aimCurrentX = x;
-            game.player.aimCurrentY = worldY;
             
             // Calculate power and angle from drag distance
             const dx = x - game.player.x;
@@ -3634,11 +3657,23 @@
             
             // Power based on drag distance (0-100%)
             const maxDragDistance = 250; // pixels
-            const powerPercent = Math.min(100, Math.round((distance / maxDragDistance) * 100));
+            let powerPercent = Math.min(100, Math.round((distance / maxDragDistance) * 100));
+            
+            // Clamp cursor position to max power distance
+            if (distance > maxDragDistance) {
+                const angle = Math.atan2(dy, dx);
+                game.player.aimCurrentX = game.player.x + Math.cos(angle) * maxDragDistance;
+                game.player.aimCurrentY = game.player.y + Math.sin(angle) * maxDragDistance;
+                powerPercent = 100;
+            } else {
+                game.player.aimCurrentX = x;
+                game.player.aimCurrentY = worldY;
+            }
+            
             game.player.powerPercent = powerPercent;
             
             // Angle in degrees
-            const angleRad = Math.atan2(dy, dx);
+            const angleRad = Math.atan2(game.player.aimCurrentY - game.player.y, game.player.aimCurrentX - game.player.x);
             const angleDeg = Math.round((angleRad * 180 / Math.PI + 360) % 360);
             
             // Update indicators
