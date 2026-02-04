@@ -320,6 +320,18 @@
         body {
             animation: fadeIn 0.5s ease-in;
         }
+        
+        /* FEATURE 2: Leaderboard Entry Styles */
+        .leaderboard-entry {
+            background: rgba(50, 40, 30, 0.8);
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(139, 115, 85, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -334,8 +346,11 @@
     <!-- HUD -->
     <div class="hud">
         <div class="hud-left" id="heightDisplay">Height: 0m</div>
-        <div class="hud-right" id="coinsDisplay">🪙 0</div>
+        <div class="hud-right" id="coinsDisplay">🪙 0 | 🎯 0</div>
     </div>
+    
+    <!-- FEATURE 3: Combo Display -->
+    <div id="comboDisplay" style="position: absolute; top: calc(env(safe-area-inset-top, 10px) + 80px); left: 50%; transform: translateX(-50%); background: rgba(255, 107, 107, 0.9); padding: 8px 16px; border-radius: 20px; color: #fff; font-weight: 700; font-size: 18px; z-index: 6; display: none;"></div>
 
     </div>
     
@@ -356,24 +371,39 @@
         <div id="leaderboardList"></div>
     </div>
 
-    <div class="power-bar" id="powerBar">
-        <div class="power-bar-label">JUMP POWER</div>
-        <div class="power-bar-container" id="powerBarContainer">
-            <div class="power-fill" id="powerFill"></div>
-            <div class="power-percentage" id="powerPercentage">50%</div>
+    <!-- Jump Indicators -->
+    <div id="jumpIndicators" style="position: absolute; bottom: calc(env(safe-area-inset-bottom, 20px) + 20px); left: 50%; transform: translateX(-50%); z-index: 5; display: none; flex-direction: column; gap: 10px; align-items: center;">
+        <div style="display: flex; gap: 15px;">
+            <div style="background: rgba(30, 25, 20, 0.92); padding: 12px 18px; border: 1px solid rgba(200, 170, 130, 0.3); border-radius: 6px; color: #fff; font-weight: 600; font-size: 15px;">
+                💪 <span id="powerIndicator">0%</span>
+            </div>
+            <div style="background: rgba(30, 25, 20, 0.92); padding: 12px 18px; border: 1px solid rgba(200, 170, 130, 0.3); border-radius: 6px; color: #fff; font-weight: 600; font-size: 15px;">
+                📐 <span id="angleIndicator">0°</span>
+            </div>
         </div>
     </div>
-    <div class="instruction" id="instruction">TAP POWER BAR • DRAG TO AIM • RELEASE TO JUMP</div>
+    <div class="instruction" id="instruction">DRAG TO AIM • RELEASE TO JUMP</div>
 
     <!-- Start Screen -->
     <div class="screen active" id="startScreen">
         <div class="title">⛰️ MOUNTAIN<br>CLIMBER</div>
         <div class="subtitle">Race to the Summit!</div>
         <button class="btn" onclick="game.startGame('solo')">🧗 SOLO CLIMB</button>
+        <button class="btn" onclick="game.startGame('daily')" style="background: #d4a03c; border-color: rgba(0,0,0,0.2);">📅 DAILY RUN</button>
         <button class="btn" onclick="game.startGame('multiplayer')" style="background: #6b8e23; border-color: rgba(0,0,0,0.2);">👥 MULTIPLAYER</button>
-        <button class="btn" onclick="game.showStore()" style="background: #d4a03c; border-color: rgba(0,0,0,0.2);">🏪 STORE</button>
+        <button class="btn" onclick="game.showDailyLeaderboard()" style="background: #9b6baa; border-color: rgba(0,0,0,0.2);">🏆 DAILY LEADERBOARD</button>
+        <button class="btn" onclick="game.showStore()">🏪 STORE</button>
         <div class="coins-display">🪙 <span id="totalCoins">0</span></div>
-        <div style="position: absolute; bottom: 20px; color: rgba(255,255,255,0.3); font-size: 12px; font-weight: 500;">v1.0</div>
+        <div style="position: absolute; bottom: 20px; color: rgba(255,255,255,0.3); font-size: 12px; font-weight: 500;">v2.0 - Full Features Edition</div>
+    </div>
+
+    <!-- FEATURE 2: Daily Leaderboard Screen -->
+    <div class="screen" id="dailyLeaderboardScreen">
+        <div class="title">🏆 DAILY TOP 10</div>
+        <div style="max-width: 90%; width: 600px; max-height: 70vh; overflow-y: auto; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(101, 67, 33, 0.5); border-radius: 10px; padding: 20px;">
+            <div id="dailyLeaderboardContent"></div>
+        </div>
+        <button class="btn" onclick="game.showStart()" style="margin-top: 20px;">← BACK</button>
     </div>
 
     <!-- Store Screen -->
@@ -400,8 +430,10 @@
     <div class="screen" id="gameOverScreen">
         <div class="title">⛰️ TIME'S UP!</div>
         <div class="score-display">Height: <span id="finalHeight">0</span>m</div>
+        <div class="score-display" style="font-size: 24px;">Score: <span id="finalScore">0</span></div>
+        <div class="score-display" style="font-size: 20px;">Max Combo: <span id="maxCombo">0</span>x</div>
         <div class="coins-display">+<span id="earnedCoins">0</span> 🪙</div>
-        <button class="btn" onclick="startGame('solo')">CLIMB AGAIN</button>
+        <button class="btn" onclick="game.restartLastMode()">CLIMB AGAIN</button>
         <button class="btn btn-secondary" onclick="showStart()">MENU</button>
     </div>
 
@@ -524,6 +556,30 @@
             }, 200);
         });
 
+        // ===== FEATURE 1: Seeded PRNG for Daily Runs =====
+        class SeededRandom {
+            constructor(seed) { this.seed = seed; }
+            next() { 
+                this.seed = (this.seed * 9301 + 49297) % 233280;
+                return this.seed / 233280;
+            }
+        }
+        
+        function getTodayDateString() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+        
+        function getDailySeed() {
+            const dateStr = getTodayDateString();
+            let hash = 0;
+            for (let i = 0; i < dateStr.length; i++) {
+                hash = ((hash << 5) - hash) + dateStr.charCodeAt(i);
+                hash = hash & hash;
+            }
+            return Math.abs(hash);
+        }
+
         // Game state
         // Initialize the global game object
         game = {
@@ -597,7 +653,31 @@
                 luckBoost: false,
                 speedBoost: false
             },
-            ownedUpgrades: JSON.parse(localStorage.getItem('ownedUpgrades') || '[]')
+            ownedUpgrades: JSON.parse(localStorage.getItem('ownedUpgrades') || '[]'),
+            // ===== NEW FEATURES =====
+            // FEATURE 1: Daily Run with seeded PRNG
+            dailySeed: 0,
+            seededRandom: null,
+            lastMode: 'solo',
+            // FEATURE 2: Daily Leaderboard
+            playerName: localStorage.getItem('climberPlayerName') || null,
+            // FEATURE 3: Score & Combo System
+            score: 0,
+            combo: 0,
+            maxCombo: 0,
+            lastHoldTime: 0,
+            comboTimeWindow: 3000,
+            // FEATURE 4: Ghost Replay
+            ghostEnabled: localStorage.getItem('ghostEnabled') === 'true',
+            ghostRecording: [],
+            ghostRecordInterval: 200,
+            lastGhostRecord: 0,
+            bestSoloGhost: JSON.parse(localStorage.getItem('bestSoloGhost') || 'null'),
+            currentGhost: null,
+            // FEATURE 5: Ice Holds
+            iceSlipTimer: 0,
+            iceSlipDuration: 0.8,
+            slippingHold: null
         };
 
         // Generate progressive milestones: 250m intervals (x3), 300m (x3), 350m (x3), 400m (x3), etc.
@@ -1074,6 +1154,11 @@
             game.lastHoldY = game.groundLevel;
             game.lastMilestone = 0;
             
+            // FEATURE 1: Initialize seeded random for daily mode
+            if (game.mode === 'daily' && game.seededRandom) {
+                game.seededRandom.seed = game.dailySeed;
+            }
+            
             // Starting hold at ground level
             game.holds.push({
                 x: displayWidth / 2,
@@ -1083,7 +1168,9 @@
                 type: 'normal',
                 moving: false,
                 visited: false,
-                lastLeftTime: 0
+                lastLeftTime: 0,
+                ice: false,
+                _id: 'h0'
             });
 
             // Generate holds upward
@@ -1115,34 +1202,38 @@
         }
 
         function addDecoration() {
-            const y = game.lastHoldY - Math.random() * 300;
-            const type = Math.random();
+            // FEATURE 1: Use seeded random for daily mode
+            const rng = (game.mode === 'daily' && game.seededRandom) ? game.seededRandom : Math;
+            const getRandom = () => rng === Math ? Math.random() : rng.next();
+            
+            const y = game.lastHoldY - getRandom() * 300;
+            const type = getRandom();
             
             let decoration;
             if (type < 0.6) {
                 // Shrub
                 decoration = {
                     type: 'shrub',
-                    x: Math.random() * displayWidth,
+                    x: getRandom() * displayWidth,
                     y: y,
-                    size: 20 + Math.random() * 30
+                    size: 20 + getRandom() * 30
                 };
             } else if (type < 0.85) {
                 // Small tree
                 decoration = {
                     type: 'tree',
-                    x: Math.random() * displayWidth,
+                    x: getRandom() * displayWidth,
                     y: y,
-                    size: 40 + Math.random() * 40
+                    size: 40 + getRandom() * 40
                 };
             } else {
                 // Goat
                 decoration = {
                     type: 'goat',
-                    x: Math.random() * displayWidth,
+                    x: getRandom() * displayWidth,
                     y: y,
-                    size: 25 + Math.random() * 15,
-                    facingRight: Math.random() > 0.5
+                    size: 25 + getRandom() * 15,
+                    facingRight: getRandom() > 0.5
                 };
             }
             
@@ -1150,7 +1241,11 @@
         }
 
         function addHold() {
-            game.lastHoldY -= game.holdSpacing * (0.8 + Math.random() * 0.4);
+            // FEATURE 1: Use seeded random for daily mode
+            const rng = (game.mode === 'daily' && game.seededRandom) ? game.seededRandom : Math;
+            const getRandom = () => rng === Math ? Math.random() : rng.next();
+            
+            game.lastHoldY -= game.holdSpacing * (0.8 + getRandom() * 0.4);
             
             // Get cliff bounds at this Y position
             const bounds = getCliffBounds(game.lastHoldY);
@@ -1160,7 +1255,7 @@
             const margin = 60;
             const minX = bounds.left + margin;
             const maxX = bounds.right - margin;
-            const x = minX + Math.random() * (maxX - minX);
+            const x = minX + getRandom() * (maxX - minX);
             
             // Increase difficulty over time
             const heightFactor = Math.abs(game.lastHoldY - game.groundLevel) / 1000;
@@ -1172,17 +1267,24 @@
             let type = 'normal';
             let moving = false;
             let breakable = false;
-            let width = 30 + Math.random() * 20;
-            let height = 15 + Math.random() * 10;
+            let ice = false; // FEATURE 5
+            let width = 30 + getRandom() * 20;
+            let height = 15 + getRandom() * 10;
             
-            // Only allow moving holds after 150m
-            if (heightMeters >= 150 && Math.random() < Math.min(0.3, heightFactor * 0.1)) {
+            // FEATURE 5: Ice holds appear after 300m altitude
+            if (heightMeters >= 300 && getRandom() < 0.15) {
+                ice = true;
+                type = 'ice';
+            }
+            
+            // Only allow moving holds after 150m (not on ice)
+            if (!ice && heightMeters >= 150 && getRandom() < Math.min(0.3, heightFactor * 0.1)) {
                 moving = true;
             }
-            if (Math.random() < Math.min(0.2, heightFactor * 0.08)) {
+            if (!ice && getRandom() < Math.min(0.2, heightFactor * 0.08)) {
                 breakable = true;
             }
-            if (Math.random() < Math.min(0.25, heightFactor * 0.1)) {
+            if (getRandom() < Math.min(0.25, heightFactor * 0.1)) {
                 width *= 0.7;
                 height *= 0.7;
             }
@@ -1194,18 +1296,20 @@
                 height: height,
                 type: type,
                 moving: moving,
-                moveSpeed: moving ? (1 + Math.random() * 2) : 0,
-                moveDir: Math.random() < 0.5 ? -1 : 1,
+                moveSpeed: moving ? (1 + getRandom() * 2) : 0,
+                moveDir: getRandom() < 0.5 ? -1 : 1,
                 moveRangeLeft: minX,
                 moveRangeRight: maxX,
                 breakable: breakable,
                 broken: false,
                 visited: false,
-                lastLeftTime: 0 // Track when player last left this hold
+                lastLeftTime: 0,
+                ice: ice, // FEATURE 5
+                _id: 'h' + game.holds.length
             });
             
             // Add decoration near some holds
-            if (Math.random() < 0.3) {
+            if (getRandom() < 0.3) {
                 addDecoration();
             }
         }
@@ -1251,15 +1355,37 @@
                     game.player.y = game.player.currentHold.y - game.player.currentHold.height / 2 - game.player.radius;
                     game.player.targetRotation = 0;
                     
-                    // Award coin with only 20% chance (F2P monetization)
+                    // FEATURE 3: Score and combo system
                     if (!game.player.currentHold.visited) {
                         game.player.currentHold.visited = true;
-                        const dropChance = game.activePowerUps.luckBoost ? 0.8 : 0.35; // 35% base rate (was 20%), luck charm boosts to 80%
+                        
+                        const now = Date.now();
+                        if (now - game.lastHoldTime < game.comboTimeWindow) {
+                            game.combo++;
+                        } else {
+                            game.combo = 1;
+                        }
+                        game.lastHoldTime = now;
+                        game.maxCombo = Math.max(game.maxCombo, game.combo);
+                        
+                        const comboMultiplier = 1 + (game.combo - 1) * 0.1;
+                        game.score += Math.floor(10 * comboMultiplier);
+                        
+                        if (game.combo > 1) {
+                            showComboDisplay();
+                        }
+                        
+                        const dropChance = game.activePowerUps.luckBoost ? 0.8 : 0.35;
                         if (Math.random() < dropChance) {
-                            game.coins += (game.activePowerUps.coinMultiplier * 2); // 2 coins per drop (was 1)
+                            game.coins += (game.activePowerUps.coinMultiplier * 2);
+                            game.score += Math.floor(5 * comboMultiplier);
                             createCoinParticles(game.player.currentHold.x, game.player.currentHold.y);
                             vibrate(10);
                         }
+                    } else {
+                        // Revisiting hold breaks combo
+                        game.combo = 0;
+                        hideComboDisplay();
                     }
                 } else {
                     // Lerp to hold position
@@ -1269,6 +1395,22 @@
                     game.player.y += (targetY - game.player.y) * game.player.snapProgress;
                 }
                 return;
+            }
+            
+            // FEATURE 5: Ice slip mechanic
+            if (game.player.grounded && game.player.currentHold && game.player.currentHold.ice) {
+                game.iceSlipTimer += dt;
+                if (game.iceSlipTimer >= game.iceSlipDuration) {
+                    game.player.grounded = false;
+                    game.player.snapping = false;
+                    game.player.currentHold = null;
+                    game.player.vy = 100;
+                    game.iceSlipTimer = 0;
+                    game.combo = 0;
+                    hideComboDisplay();
+                }
+            } else {
+                game.iceSlipTimer = 0;
             }
             
             // If grounded on a moving hold, move with it
@@ -3440,25 +3582,13 @@
         }
         let touching = false;
         let touchId = null;
-        let powerBarDragging = false;
 
-        function updatePowerBar(clientX) {
-            const powerBarContainer = document.getElementById('powerBarContainer');
-            const rect = powerBarContainer.getBoundingClientRect();
-            const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-            const percent = Math.round((x / rect.width) * 100);
-            
-            game.player.powerPercent = percent;
-            document.getElementById('powerFill').style.width = percent + '%';
-            document.getElementById('powerPercentage').textContent = percent + '%';
-        }
 
         function startAim(x, y) {
             console.log('startAim called:', {
                 state: game.state,
                 grounded: game.player.grounded,
                 snapping: game.player.snapping,
-                power: game.player.powerPercent,
                 playerY: game.player.y,
                 groundLevel: game.groundLevel,
                 currentHold: game.player.currentHold ? 'yes' : 'no'
@@ -3472,10 +3602,6 @@
                 console.log('Blocked: player not grounded');
                 return;
             }
-            if (game.player.powerPercent === 0) {
-                console.log('Blocked: power is 0');
-                return;
-            }
             
             // Convert screen coords to world coords
             const worldY = y + game.camera.y;
@@ -3486,6 +3612,12 @@
             game.player.aimStartY = worldY;
             game.player.aimCurrentX = x;
             game.player.aimCurrentY = worldY;
+            game.player.powerPercent = 0;
+            
+            // Show jump indicators
+            document.getElementById('jumpIndicators').style.display = 'flex';
+            document.getElementById('powerIndicator').textContent = '0%';
+            document.getElementById('angleIndicator').textContent = '0°';
         }
 
         function updateAim(x, y) {
@@ -3494,6 +3626,24 @@
             const worldY = y + game.camera.y;
             game.player.aimCurrentX = x;
             game.player.aimCurrentY = worldY;
+            
+            // Calculate power and angle from drag distance
+            const dx = x - game.player.x;
+            const dy = worldY - game.player.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // Power based on drag distance (0-100%)
+            const maxDragDistance = 250; // pixels
+            const powerPercent = Math.min(100, Math.round((distance / maxDragDistance) * 100));
+            game.player.powerPercent = powerPercent;
+            
+            // Angle in degrees
+            const angleRad = Math.atan2(dy, dx);
+            const angleDeg = Math.round((angleRad * 180 / Math.PI + 360) % 360);
+            
+            // Update indicators
+            document.getElementById('powerIndicator').textContent = `${powerPercent}%`;
+            document.getElementById('angleIndicator').textContent = `${angleDeg}°`;
         }
 
         // Analyze which holds are reachable with maximum normal jump power
@@ -3614,6 +3764,9 @@
             
             game.player.aimMode = false;
             
+            // Hide indicators
+            document.getElementById('jumpIndicators').style.display = 'none';
+            
             const dx = game.player.aimCurrentX - game.player.x;
             const dy = game.player.aimCurrentY - game.player.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -3697,49 +3850,10 @@
             }, 1200);
         }
 
-        // Power bar interaction
-        const powerBarContainer = document.getElementById('powerBarContainer');
-        
-        powerBarContainer.addEventListener('mousedown', (e) => {
-            e.stopPropagation();
-            powerBarDragging = true;
-            updatePowerBar(e.clientX);
-        });
-
-        powerBarContainer.addEventListener('touchstart', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            powerBarDragging = true;
-            const touch = e.touches[0];
-            updatePowerBar(touch.clientX);
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (powerBarDragging) {
-                updatePowerBar(e.clientX);
-            }
-        });
-
-        document.addEventListener('touchmove', (e) => {
-            if (powerBarDragging) {
-                const touch = e.touches[0];
-                updatePowerBar(touch.clientX);
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            powerBarDragging = false;
-        });
-
-        document.addEventListener('touchend', () => {
-            powerBarDragging = false;
-        });
-
         // Canvas touch handling for aiming
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (touchId !== null) return;
-            if (powerBarDragging) return;
             
             const touch = e.touches[0];
             touchId = touch.identifier;
@@ -3774,7 +3888,6 @@
 
         // Mouse handling for canvas
         canvas.addEventListener('mousedown', (e) => {
-            if (powerBarDragging) return;
             touching = true;
             startAim(e.clientX, e.clientY);
         });
@@ -4039,6 +4152,160 @@
         `;
         document.head.appendChild(style);
 
+        // ===== FEATURE 2: Daily Leaderboard Functions =====
+        function getPlayerName() {
+            if (!game.playerName) {
+                const name = prompt('Enter your name for the Daily Leaderboard:', 'Player');
+                if (name && name.trim()) {
+                    game.playerName = name.trim().substring(0, 20);
+                    localStorage.setItem('climberPlayerName', game.playerName);
+                } else {
+                    game.playerName = 'Player';
+                }
+            }
+            return game.playerName;
+        }
+
+        function saveDailyScore(date, name, height, score) {
+            const key = `dailyLeaderboard_${date}`;
+            let leaderboard = JSON.parse(localStorage.getItem(key) || '[]');
+            const existingIndex = leaderboard.findIndex(e => e.name === name);
+            const entry = { name, height, score, timestamp: Date.now() };
+            
+            if (existingIndex >= 0) {
+                if (score > leaderboard[existingIndex].score || 
+                    (score === leaderboard[existingIndex].score && height > leaderboard[existingIndex].height)) {
+                    leaderboard[existingIndex] = entry;
+                }
+            } else {
+                leaderboard.push(entry);
+            }
+            
+            leaderboard.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return b.height - a.height;
+            });
+            
+            leaderboard = leaderboard.slice(0, 10);
+            localStorage.setItem(key, JSON.stringify(leaderboard));
+        }
+
+        function getDailyLeaderboard(date) {
+            return JSON.parse(localStorage.getItem(`dailyLeaderboard_${date}`) || '[]');
+        }
+
+        game.showDailyLeaderboard = function() {
+            document.getElementById('startScreen').classList.remove('active');
+            document.getElementById('storeScreen').classList.remove('active');
+            document.getElementById('dailyLeaderboardScreen').classList.add('active');
+            
+            const today = getTodayDateString();
+            const yest = new Date(); yest.setDate(yest.getDate() - 1);
+            const yesterdayStr = yest.toISOString().split('T')[0];
+            
+            const todayBoard = getDailyLeaderboard(today);
+            const yesterdayBoard = getDailyLeaderboard(yesterdayStr);
+            
+            let html = `<h3 style="color: #ffd700; text-align: center; margin-bottom: 15px; font-size: 20px;">📅 ${today}</h3>`;
+            
+            if (todayBoard.length === 0) {
+                html += '<p style="text-align: center; color: rgba(255,255,255,0.6); padding: 20px;">No entries yet. Be the first!</p>';
+            } else {
+                todayBoard.forEach((entry, index) => {
+                    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                    const highlight = entry.name === game.playerName ? ' style="background: rgba(255, 215, 0, 0.2); border-color: #ffd700;"' : '';
+                    html += `
+                        <div class="leaderboard-entry"${highlight}>
+                            <div>
+                                <span style="font-size: 18px; margin-right: 8px;">${medal}</span>
+                                <strong style="color: #fff;">${entry.name}</strong>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: #4ecdc4; font-weight: bold; font-size: 16px;">🎯 ${entry.score}</div>
+                                <div style="color: #d4a78a; font-size: 13px;">${entry.height}m</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            if (yesterdayBoard.length > 0) {
+                html += `<h3 style="color: #999; text-align: center; margin: 30px 0 15px; font-size: 18px;">Yesterday - ${yesterdayStr}</h3>`;
+                yesterdayBoard.slice(0, 3).forEach((entry, index) => {
+                    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
+                    html += `
+                        <div class="leaderboard-entry" style="opacity: 0.6;">
+                            <div>
+                                <span style="font-size: 18px; margin-right: 8px;">${medal}</span>
+                                <strong style="color: #fff;">${entry.name}</strong>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: #4ecdc4; font-size: 15px;">🎯 ${entry.score}</div>
+                                <div style="color: #d4a78a; font-size: 12px;">${entry.height}m</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            document.getElementById('dailyLeaderboardContent').innerHTML = html;
+        };
+
+        // ===== FEATURE 3: Score & Combo Display Functions =====
+        function showComboDisplay() {
+            const display = document.getElementById('comboDisplay');
+            if (display) {
+                display.textContent = `${game.combo}x COMBO!`;
+                display.style.display = 'block';
+            }
+        }
+
+        function hideComboDisplay() {
+            const display = document.getElementById('comboDisplay');
+            if (display) {
+                display.style.display = 'none';
+            }
+        }
+
+        // ===== FEATURE 4: Ghost Replay Functions =====
+        function saveGhost(mode, recording, score, height) {
+            if (mode === 'solo') {
+                const current = game.bestSoloGhost;
+                if (!current || score > current.score || (score === current.score && height > current.height)) {
+                    game.bestSoloGhost = { recording, score, height };
+                    localStorage.setItem('bestSoloGhost', JSON.stringify(game.bestSoloGhost));
+                }
+            } else if (mode === 'daily') {
+                const date = getTodayDateString();
+                const key = `bestDailyGhost_${date}`;
+                const current = JSON.parse(localStorage.getItem(key) || 'null');
+                if (!current || score > current.score || (score === current.score && height > current.height)) {
+                    localStorage.setItem(key, JSON.stringify({ recording, score, height }));
+                }
+            }
+        }
+
+        function loadGhost(mode) {
+            if (mode === 'solo') {
+                return game.bestSoloGhost ? game.bestSoloGhost.recording : null;
+            } else if (mode === 'daily') {
+                const date = getTodayDateString();
+                const key = `bestDailyGhost_${date}`;
+                const data = JSON.parse(localStorage.getItem(key) || 'null');
+                return data ? data.recording : null;
+            }
+            return null;
+        }
+
+        game.toggleGhost = function() {
+            game.ghostEnabled = !game.ghostEnabled;
+            localStorage.setItem('ghostEnabled', game.ghostEnabled);
+        };
+
+        game.restartLastMode = function() {
+            game.startGame(game.lastMode);
+        };
+
         // Game loop with FPS limiting for mobile battery life
         let lastTime = Date.now();
         const TARGET_FPS = 60;
@@ -4065,8 +4332,8 @@
                 updateNPCs(dt);
                 updateParticles(dt);
                 
-                // Update timer in solo mode
-                if (game.mode === 'solo' && game.timerActive && game.state === 'playing') {
+                // Update timer in solo and daily mode
+                if ((game.mode === 'solo' || game.mode === 'daily') && game.timerActive && game.state === 'playing') {
                     game.timer -= dt;
                     
                     // Check if time ran out
@@ -4084,23 +4351,25 @@
                 
                 // Update HUD
                 document.getElementById('heightDisplay').textContent = `Height: ${game.height}m`;
-                document.getElementById('coinsDisplay').textContent = `🪙 ${game.coins}`;
+                document.getElementById('coinsDisplay').textContent = `🪙 ${game.coins} | 🎯 ${game.score}`;
                 
-                // Update timer and checkpoint distance in solo mode
-                if (game.mode === 'solo') {
+                // Update timer and checkpoint distance in solo/daily mode
+                if (game.mode === 'solo' || game.mode === 'daily') {
                     const minutes = Math.floor(game.timer / 60);
                     const seconds = Math.floor(game.timer % 60);
                     const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                    const timerColor = game.timer < 10 ? '#ff6b6b' : '#4ecdc4';
+                    const timerColor = game.timer < 10 ? '#ff6b6b' : (game.mode === 'daily' ? '#ffd700' : '#4ecdc4');
                     
                     // Find next checkpoint
                     const nextCheckpoint = game.milestones.find(m => m > game.height);
                     const distanceToNext = nextCheckpoint ? nextCheckpoint - game.height : 0;
                     
                     if (nextCheckpoint) {
-                        document.getElementById('heightDisplay').textContent = `⏱️ ${timeStr} • ${game.height}m • ⏱️${distanceToNext}m`;
+                        const modeIcon = game.mode === 'daily' ? '📅' : '';
+                        document.getElementById('heightDisplay').textContent = `${modeIcon}⏱️ ${timeStr} • ${game.height}m • ⏱️${distanceToNext}m`;
                     } else {
-                        document.getElementById('heightDisplay').textContent = `⏱️ ${timeStr} • ${game.height}m`;
+                        const modeIcon = game.mode === 'daily' ? '📅' : '';
+                        document.getElementById('heightDisplay').textContent = `${modeIcon}⏱️ ${timeStr} • ${game.height}m`;
                     }
                     document.getElementById('heightDisplay').style.color = timerColor;
                 } else {
@@ -4133,6 +4402,7 @@
         // Game controls
         game.startGame = function(mode = 'solo') {
             game.mode = mode;
+            game.lastMode = mode; // FEATURE 1: Remember last mode
             game.state = 'playing';
             game.height = 0;
             game.maxHeight = 0;
@@ -4147,9 +4417,35 @@
             game.finishOrder = [];
             game.raceFinished = false;
             
+            // FEATURE 3: Reset score and combo
+            game.score = 0;
+            game.combo = 0;
+            game.maxCombo = 0;
+            game.lastHoldTime = 0;
+            hideComboDisplay();
+            
+            // FEATURE 4: Reset ghost recording
+            game.ghostRecording = [];
+            game.lastGhostRecord = 0;
+            
+            // FEATURE 1: Initialize daily mode with seeded random
+            if (mode === 'daily') {
+                game.dailySeed = getDailySeed();
+                game.seededRandom = new SeededRandom(game.dailySeed);
+            } else {
+                game.seededRandom = null;
+            }
+            
+            // FEATURE 4: Load ghost for solo or daily mode
+            if (mode === 'solo' || mode === 'daily') {
+                game.currentGhost = loadGhost(mode);
+            } else {
+                game.currentGhost = null;
+            }
+            
             // Initialize timer/countdown based on mode
-            if (mode === 'solo') {
-                game.timer = 30 + game.activePowerUps.bonusTime; // Apply extra time power-up
+            if (mode === 'solo' || mode === 'daily') {
+                game.timer = 30 + game.activePowerUps.bonusTime;
                 game.timerActive = true;
                 game.countdown = 0;
                 game.raceStarted = true;
@@ -4178,18 +4474,15 @@
             
             document.getElementById('startScreen').classList.remove('active');
             document.getElementById('gameOverScreen').classList.remove('active');
+            document.getElementById('dailyLeaderboardScreen').classList.remove('active');
             
             const skinsScreen = document.getElementById('skinsScreen');
             if (skinsScreen) {
                 skinsScreen.classList.remove('active');
             }
             
-            document.getElementById('powerBar').style.display = 'block';
+            document.getElementById('jumpIndicators').style.display = 'none';
             document.getElementById('instruction').style.display = 'block';
-            
-            // Reset power bar display
-            document.getElementById('powerFill').style.width = '50%';
-            document.getElementById('powerPercentage').textContent = '50%';
             
             // Show warp toggle button only if Konami code unlocked
             if (konamiUnlocked) {
@@ -4220,7 +4513,7 @@
                 skinsScreen.classList.remove('active');
             }
             
-            document.getElementById('powerBar').style.display = 'none';
+            document.getElementById('jumpIndicators').style.display = 'none';
             document.getElementById('warpToggle').style.display = 'none';
             document.getElementById('warpUI').style.display = 'none';
             document.getElementById('totalCoins').textContent = game.totalCoins;
@@ -4618,13 +4911,30 @@
             if (game.state !== 'playing') return;
             
             game.state = 'gameOver';
+            game.timerActive = false;
+            game.combo = 0;
+            hideComboDisplay();
+            
             game.totalCoins += game.coins;
             localStorage.setItem('climberCoins', game.totalCoins);
             
+            // FEATURE 4: Save ghost replay
+            if (game.mode === 'solo' || game.mode === 'daily') {
+                saveGhost(game.mode, game.ghostRecording, game.score, game.maxHeight);
+            }
+            
+            // FEATURE 2: Save to daily leaderboard
+            if (game.mode === 'daily') {
+                const playerName = getPlayerName();
+                saveDailyScore(getTodayDateString(), playerName, game.maxHeight, game.score);
+            }
+            
             vibrate(50);
             
-            document.getElementById('powerBar').style.display = 'none';
+            document.getElementById('jumpIndicators').style.display = 'none';
             document.getElementById('finalHeight').textContent = game.maxHeight;
+            document.getElementById('finalScore').textContent = game.score;
+            document.getElementById('maxCombo').textContent = game.maxCombo;
             document.getElementById('earnedCoins').textContent = game.coins;
             document.getElementById('gameOverScreen').classList.add('active');
         }
